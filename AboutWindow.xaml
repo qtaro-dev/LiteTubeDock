@@ -1,0 +1,91 @@
+<Window x:Class="LiteTubeDock.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        MinWidth="560"
+        MinHeight="560"
+        Width="560"
+        Height="560"
+        Icon="pack://application:,,,/Resource/Images/LiteTubeDock.ico"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
+    <Grid Margin="18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <Image x:Name="AboutLogoImage"
+                   Source="pack://application:,,,/Resource/Images/LiteTubeDock_LogoLockup.png"
+                   Height="72"
+                   Stretch="Uniform"
+                   HorizontalAlignment="Left"
+                   Margin="0,0,0,10" />
+
+            <TextBlock x:Name="AppNameTextBlock"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       TextWrapping="Wrap"
+                       TextTrimming="None" />
+
+            <TextBlock x:Name="VersionTextBlock"
+                       TextWrapping="Wrap"
+                       TextTrimming="None"
+                       Margin="0,2,0,12" />
+
+            <TextBlock x:Name="DescriptionTextBlock"
+                       TextWrapping="Wrap"
+                       TextTrimming="None"
+                       HorizontalAlignment="Stretch"
+                       LineHeight="20"
+                       Margin="0,0,0,12" />
+
+            <StackPanel Margin="0,0,0,12">
+                <TextBlock x:Name="TechnologyHeadingTextBlock"
+                           FontWeight="Bold"
+                           TextWrapping="Wrap"
+                           TextTrimming="None"
+                           Margin="0,0,0,4" />
+                <TextBlock x:Name="TechnologyTextBlock"
+                           TextWrapping="Wrap"
+                           TextTrimming="None"
+                           HorizontalAlignment="Stretch"
+                           LineHeight="18" />
+            </StackPanel>
+
+            <StackPanel Margin="0,0,0,12">
+                <TextBlock x:Name="DeveloperTextBlock"
+                           TextWrapping="Wrap"
+                           TextTrimming="None"
+                           HorizontalAlignment="Stretch"
+                           LineHeight="18"
+                           Margin="0,0,0,4" />
+                <TextBlock x:Name="DevelopmentSupportTextBlock"
+                           TextWrapping="Wrap"
+                           TextTrimming="None"
+                           HorizontalAlignment="Stretch"
+                           LineHeight="18" />
+            </StackPanel>
+
+            <StackPanel>
+                <TextBlock x:Name="SecurityPolicyHeadingTextBlock"
+                           FontWeight="Bold"
+                           TextWrapping="Wrap"
+                           TextTrimming="None"
+                           Margin="0,0,0,4" />
+                <TextBlock x:Name="SecurityPolicyTextBlock"
+                           TextWrapping="Wrap"
+                           TextTrimming="None"
+                           HorizontalAlignment="Stretch"
+                           LineHeight="18" />
+            </StackPanel>
+        </StackPanel>
+
+        <Button x:Name="CloseAboutButton"
+                Grid.Row="1"
+                Width="96"
+                Height="32"
+                HorizontalAlignment="Right"
+                Margin="0,16,0,0" />
+    </Grid>
+</Window>

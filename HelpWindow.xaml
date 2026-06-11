@@ -1,0 +1,33 @@
+<Window x:Class="LiteTubeDock.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        MinWidth="600"
+        MinHeight="480"
+        Width="750"
+        Height="735"
+        Icon="pack://application:,,,/Resource/Images/LiteTubeDock.ico"
+        WindowStartupLocation="CenterOwner">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="0"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <StackPanel x:Name="HelpContentPanel"
+                        HorizontalAlignment="Stretch">
+                <TextBlock x:Name="HelpContentTextBlock"
+                           Visibility="Collapsed" />
+            </StackPanel>
+        </ScrollViewer>
+
+        <Button x:Name="CloseHelpButton"
+                Grid.Row="1"
+                Width="96"
+                Height="32"
+                HorizontalAlignment="Right"
+                Margin="0,16,0,0" />
+    </Grid>
+</Window>

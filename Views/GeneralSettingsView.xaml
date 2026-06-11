@@ -1,0 +1,208 @@
+<UserControl x:Class="LiteTubeDock.Views.GeneralSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="520"
+             d:DesignWidth="900">
+    <Grid x:Name="GeneralSettingsPanel">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Text="基本設定"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   Margin="0,0,0,20" />
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="0"
+                   Text="ホームURL"
+                   VerticalAlignment="Center"
+                   Margin="0,0,12,12" />
+
+        <TextBox x:Name="HomeUrlTextBox"
+                 Grid.Row="1"
+                 Grid.Column="1"
+                 Text="https://www.youtube.com/"
+                 Margin="0,0,20,12" />
+
+        <CheckBox x:Name="RestoreLastUrlCheckBox"
+                  Grid.Row="2"
+                  Grid.Column="1"
+                  Content="起動時に前回URLを復元する"
+                  Margin="0,0,0,12" />
+
+        <CheckBox x:Name="StartAlwaysOnTopCheckBox"
+                  Grid.Row="3"
+                  Grid.Column="1"
+                  Content="常に最前面で起動する"
+                  Margin="0,0,0,12" />
+
+        <CheckBox x:Name="RestoreWindowStateCheckBox"
+                  Grid.Row="4"
+                  Grid.Column="1"
+                  Content="ウィンドウ位置とサイズを復元する"
+                  Margin="0,0,0,12" />
+
+        <CheckBox x:Name="AutoplayCheckBox"
+                  Grid.Row="5"
+                  Grid.Column="1"
+                  Content="自動再生"
+                  Margin="0,0,0,12" />
+
+        <CheckBox x:Name="ConfirmNonVideoNavigationCheckBox"
+                  Grid.Row="6"
+                  Grid.Column="1"
+                  Content="動画ページ以外への遷移を確認する"
+                  Margin="0,0,0,12" />
+
+        <CheckBox x:Name="PlayerModeRefererEnabledCheckBox"
+                  Grid.Row="7"
+                  Grid.Column="1"
+                  Content="プレイヤーモードReferer付与"
+                  Margin="0,0,0,12" />
+
+        <TextBlock Grid.Row="8"
+                   Grid.Column="0"
+                   Text="プレイヤーモードReferer"
+                   VerticalAlignment="Center"
+                   Margin="0,0,12,12" />
+
+        <TextBox x:Name="PlayerModeRefererTextBox"
+                 Grid.Row="7"
+                 Grid.Column="1"
+                 Text="https://litetubedock.local/"
+                 Margin="0,27,20,12" Grid.RowSpan="2" />
+
+        <TextBlock Grid.Row="9"
+                   Grid.Column="0"
+                   Text="ウィンドウサイズ"
+                   VerticalAlignment="Center"
+                   Margin="0,0,12,12" />
+
+        <ComboBox x:Name="WindowSizePresetComboBox"
+                  Grid.Row="9"
+                  Grid.Column="1"
+                  Width="160"
+                  HorizontalAlignment="Left"
+                  Margin="0,0,0,12">
+            <ComboBoxItem Content="現在のサイズ" />
+            <ComboBoxItem Content="800x600" />
+            <ComboBoxItem Content="960x540" />
+            <ComboBoxItem Content="1024x768" />
+            <ComboBoxItem Content="1280x720" />
+            <ComboBoxItem Content="1600x900" />
+            <ComboBoxItem Content="1920x1080" />
+            <ComboBoxItem Content="540x960" />
+            <ComboBoxItem Content="720x1280" />
+            <ComboBoxItem Content="768x1024" />
+            <ComboBoxItem Content="900x1600" />
+            <ComboBoxItem Content="1080x1920" />
+            <ComboBoxItem Content="カスタム" />
+        </ComboBox>
+
+        <TextBlock Grid.Row="10"
+                   Grid.Column="0"
+                   Text="ウィンドウ幅"
+                   VerticalAlignment="Center"
+                   Margin="0,0,12,12" />
+
+        <TextBox x:Name="WindowWidthTextBox"
+                 Grid.Row="10"
+                 Grid.Column="1"
+                 Width="100"
+                 HorizontalAlignment="Left"
+                 Margin="0,0,0,12" />
+
+        <TextBlock Grid.Row="11"
+                   Grid.Column="0"
+                   Text="ウィンドウ高さ"
+                   VerticalAlignment="Center"
+                   Margin="0,0,12,12" />
+
+        <TextBox x:Name="WindowHeightTextBox"
+                 Grid.Row="11"
+                 Grid.Column="1"
+                 Width="100"
+                 HorizontalAlignment="Left"
+                 Margin="0,0,0,12" />
+
+        <Button x:Name="CaptureCurrentWindowSizeButton"
+                Grid.Row="12"
+                Grid.Column="1"
+                Content="現在のウィンドウサイズを取得"
+                Width="200"
+                Height="32"
+                HorizontalAlignment="Left"
+                Margin="0,0,0,12" />
+
+        <Button x:Name="ResetWindowBoundsButton"
+                Grid.Row="13"
+                Grid.Column="1"
+                Content="ウィンドウ位置・サイズを初期値に戻す"
+                Width="200"
+                Height="32"
+                HorizontalAlignment="Left"
+                Margin="0,0,0,12" />
+
+        <!-- 設定フォルダの内容非表示 -->
+        <TextBlock Grid.Row="14"
+                   Grid.Column="0"
+                   Text="設定フォルダ"
+                   VerticalAlignment="Center"
+                   Margin="0,0,12,12"
+                   Visibility="Collapsed" />
+
+        <Grid Grid.Row="14"
+              Grid.Column="1"
+              Margin="0,0,20,12"
+              Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox x:Name="SettingsExportFolderTextBox"
+                     Grid.Column="0"
+                     VerticalContentAlignment="Center"
+                     MinHeight="28"
+                     MinWidth="240"
+                     Margin="0,0,8,0" />
+            <Button x:Name="BrowseSettingsExportFolderButton"
+                    Grid.Column="1"
+                    Content="参照"
+                    Width="64"
+                    Margin="0,0,8,0" />
+            <Button x:Name="OpenSettingsExportFolderButton"
+                    Grid.Column="2"
+                    Content="開く"
+                    Width="64" />
+        </Grid>
+    </Grid>
+</UserControl>

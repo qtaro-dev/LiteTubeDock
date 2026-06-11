@@ -1,0 +1,86 @@
+<Window x:Class="LiteTubeDock.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="LiteTube Dock 設定"
+        Icon="pack://application:,,,/Resource/Images/LiteTubeDock.ico"
+        Height="520"
+        Width="1180"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+    <Grid x:Name="RootGrid" Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- 設定本体 -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="180" />
+                <ColumnDefinition Width="2" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- 左カテゴリ -->
+            <StackPanel x:Name="SettingsCategoryPanel"
+                        Grid.Column="0"
+                        Margin="0,0,16,0">
+
+                <Button x:Name="GeneralSettingsCategoryButton"
+                        Content="基本設定"
+                        Height="44"
+                        HorizontalContentAlignment="Left"
+                        Padding="16,0"
+                        Margin="0,0,0,8" />
+
+                <Button x:Name="FavoriteButtonsCategoryButton"
+                        Content="お気に入りボタン"
+                        Height="44"
+                        HorizontalContentAlignment="Left"
+                        Padding="16,0"
+                        Margin="0,0,0,8" />
+            </StackPanel>
+
+            <!-- 縦区切り線 -->
+            <Border x:Name="SettingsSeparator"
+                    Grid.Column="1"
+                    Background="#808080"
+                    Margin="0,0,24,0" />
+
+            <!-- 右内容エリア -->
+            <Grid x:Name="SettingsContentArea"
+                  Grid.Column="2"
+                  Margin="24,0,0,0">
+
+                <ScrollViewer x:Name="SettingsContentScrollViewer"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <ContentControl x:Name="SettingsContentControl" />
+                </ScrollViewer>
+
+            </Grid>
+        </Grid>
+
+        <!-- 下部ボタン -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,16,0,0">
+
+            <Button x:Name="ResetSettingsButton"
+                    Content="初期値に戻す"
+                    Width="120"
+                    Margin="0,0,8,0" />
+
+            <Button x:Name="CancelSettingsButton"
+                    Content="キャンセル"
+                    Width="100"
+                    Margin="0,0,8,0" />
+
+            <Button x:Name="SaveSettingsButton"
+                    Content="保存"
+                    Width="100" />
+        </StackPanel>
+    </Grid>
+</Window>

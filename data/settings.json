@@ -1,0 +1,23 @@
+{
+  "homeUrl": "https://www.youtube.com/",
+  "lastUrl": "https://www.youtube.com/watch?v=kjby0R1wG0A\u0026list=RDkjby0R1wG0A\u0026start_radio=1",
+  "restoreLastUrl": true,
+  "alwaysOnTop": false,
+  "restoreWindowState": true,
+  "enableAutoplay": false,
+  "confirmNonVideoNavigation": true,
+  "playerModeRefererEnabled": true,
+  "playerModeReferer": "https://litetubedock.local/",
+  "enableShortcutKeys": true,
+  "showAddressBar": true,
+  "showNavigationButtons": true,
+  "webView2UserDataFolder": "data/webview2-user-data",
+  "settingsExportFolder": "E:\\Dev\\LiteTubeDock\\bin\\Debug\\net8.0-windows\\data\\settings",
+  "windowSizePreset": "1024x768",
+  "window": {
+    "left": 100,
+    "top": 100,
+    "width": 1024,
+    "height": 768
+  }
+}

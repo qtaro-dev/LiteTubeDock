@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>Resource\Images\LiteTubeDock.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="bk\**\*.cs" />
+    <None Remove="---README.md" />
+    <None Remove="Resource\a_clean_branding_identity_presentation_mockup_on_a_2_batch_2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3967.48" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="data\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resource\HOME.png" />
+    <Resource Include="Resource\Images\LiteTubeDock.ico" />
+    <Resource Include="Resource\Images\LiteTubeDock_AppIcon_256.png" />
+    <Resource Include="Resource\Images\LiteTubeDock_LogoLockup.png" />
+    <Resource Include="Resource\Left.png" />
+    <Resource Include="Resource\RELOAD.png" />
+    <Resource Include="Resource\Right.png" />
+  </ItemGroup>
+
+</Project>
