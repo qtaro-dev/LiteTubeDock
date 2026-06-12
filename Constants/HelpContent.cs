@@ -11,6 +11,7 @@ public static class HelpContent
         "お気に入りボタン",
         "プレイヤーモード",
         "設定",
+        "外部URL制御",
         "セキュリティ方針"
     ];
 
@@ -119,6 +120,19 @@ public static class HelpContent
             [
                 "同期対象はお気に入り設定のみです。",
                 "基本設定、ウィンドウ位置、ウィンドウサイズ、現在URL、ログイン状態は同期しません。"
+            ],
+            []),
+        new(
+            "外部URL制御",
+            [
+                "通常利用では意識する必要のない内部連携機能として、--ipc-enabled 指定時だけPID別のNamed Pipeを開きます。",
+                "Pipe名は LiteTubeDock_{PID} です。",
+                "対応コマンドは ping、navigate、get-status です。",
+                "navigate は http:// または https:// のURLだけを受け付け、指定URLへ一時的に移動します。"
+            ],
+            [
+                "通常起動、--player-mode のみ、--url 指定のみではNamed Pipe待受を開始しません。",
+                "Named Pipe経由のURL指定では、LastUrl、お気に入り設定、bookmarks.json は更新しません。"
             ],
             []),
         new(
@@ -268,6 +282,15 @@ data/webview2-user-data
 YouTubeショート向けに縦長サイズを選べます。
 設定画面の 現在のウィンドウサイズを取得 ボタンで現在サイズを取得できます。
 ウィンドウ位置・サイズを初期値に戻す ボタンで既定値へ戻せます。
+
+外部URL制御
+
+通常利用では意識する必要のない内部連携機能として、--ipc-enabled 指定時だけPID別のNamed Pipeを開きます。
+Pipe名は LiteTubeDock_{PID} です。
+対応コマンドは ping、navigate、get-status です。
+navigate は http:// または https:// のURLだけを受け付け、指定URLへ一時的に移動します。
+通常起動、--player-mode のみ、--url 指定のみではNamed Pipe待受を開始しません。
+Named Pipe経由のURL指定では、LastUrl、お気に入り設定、bookmarks.json は更新しません。
 """;
 
     public const string AboutDescription = """

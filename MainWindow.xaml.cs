@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,6 +37,9 @@ public partial class MainWindow : Window
     private FullScreenSnapshot? _fullScreenSnapshot;
     private bool _skipNextNavigationConfirmation;
     private bool _isApplyingWindowSize;
+    private bool _currentUrlIsTemporaryIpcNavigation;
+    private readonly TaskCompletionSource<bool> _webViewReadyCompletion = new(TaskCreationOptions.RunContinuationsAsynchronously);
+    private NamedPipeServerService? _namedPipeServer;
     private readonly bool _isPlayerMode;
 
     public MainWindow()
@@ -79,6 +83,7 @@ public partial class MainWindow : Window
         AttachEvents();
         UpdateNavigationButtonStates();
         InitializeBookmarksWatcher();
+        StartNamedPipeServer();
     }
 
     private void AttachEvents()
@@ -175,18 +180,110 @@ public partial class MainWindow : Window
             PlayerWebView.CoreWebView2.HistoryChanged += (_, _) => UpdateNavigationButtonStates();
             ConfigureYouTubeEmbedReferer();
             UpdateNavigationButtonStates();
+            _webViewReadyCompletion.TrySetResult(true);
             NavigateTrusted(GetInitialNavigationUrl());
         }
         catch (Exception)
         {
+            _webViewReadyCompletion.TrySetResult(false);
             LoadingStatusText.Text = AppConstants.LoadingFailedText;
         }
     }
 
     private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
     {
+        StopNamedPipeServer();
         DisposeBookmarksWatcher();
         SaveCurrentSettings();
+    }
+
+    private void StartNamedPipeServer()
+    {
+        if (!_startupOptions.EnableIpc)
+        {
+            return;
+        }
+
+        try
+        {
+            var handler = new IpcCommandHandler(NavigateFromIpcAsync, GetIpcStatus);
+            _namedPipeServer = new NamedPipeServerService(handler.HandleAsync);
+            _namedPipeServer.Start(IpcConstants.GetPipeName(Environment.ProcessId));
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Named pipe server start failed: {ex}");
+        }
+    }
+
+    private void StopNamedPipeServer()
+    {
+        var server = _namedPipeServer;
+        _namedPipeServer = null;
+        if (server is null)
+        {
+            return;
+        }
+
+        try
+        {
+            _ = server.StopAsync();
+            server.Dispose();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Named pipe server dispose failed: {ex}");
+        }
+    }
+
+    private async Task<bool> NavigateFromIpcAsync(string url, CancellationToken cancellationToken)
+    {
+        var operation = Dispatcher.InvokeAsync(() => NavigateFromIpcOnUiAsync(url, cancellationToken));
+        return await await operation.Task;
+    }
+
+    private async Task<bool> NavigateFromIpcOnUiAsync(string url, CancellationToken cancellationToken)
+    {
+        try
+        {
+            if (!_webViewReadyCompletion.Task.IsCompleted)
+            {
+                await _webViewReadyCompletion.Task.WaitAsync(
+                    TimeSpan.FromMilliseconds(IpcConstants.WebViewReadyTimeoutMilliseconds),
+                    cancellationToken);
+            }
+        }
+        catch (Exception ex) when (ex is OperationCanceledException or TimeoutException)
+        {
+            Debug.WriteLine($"IPC navigate waited for WebView2 readiness and failed: {ex.Message}");
+            return false;
+        }
+
+        if (PlayerWebView.CoreWebView2 is null)
+        {
+            return false;
+        }
+
+        NavigateTrusted(url, saveAsLastUrl: false);
+        return true;
+    }
+
+    private IpcStatusData GetIpcStatus()
+    {
+        if (!Dispatcher.CheckAccess())
+        {
+            return Dispatcher.Invoke(GetIpcStatus);
+        }
+
+        return new IpcStatusData
+        {
+            ProcessId = Environment.ProcessId,
+            WindowTitle = Title ?? string.Empty,
+            IsPlayerMode = _isPlayerMode,
+            CurrentUrl = GetCurrentWebViewUrl() ?? string.Empty,
+            IsWebViewReady = PlayerWebView.CoreWebView2 is not null,
+            AppVersion = AppConstants.AppVersion
+        };
     }
 
     private void MainWindow_PreviewKeyDown(object sender, WpfKeyEventArgs e)
@@ -911,8 +1008,9 @@ public partial class MainWindow : Window
         PlayerWebView.Source = uri;
     }
 
-    private void NavigateTrusted(string url)
+    private void NavigateTrusted(string url, bool saveAsLastUrl = true)
     {
+        _currentUrlIsTemporaryIpcNavigation = !saveAsLastUrl;
         _skipNextNavigationConfirmation = true;
         Navigate(url);
     }
@@ -1596,7 +1694,7 @@ public partial class MainWindow : Window
 
     private void SaveCurrentSettings()
     {
-        if (!_startupOptions.HasInitialUrl)
+        if (!_startupOptions.HasInitialUrl && !_currentUrlIsTemporaryIpcNavigation)
         {
             _settings.LastUrl = GetCurrentWebViewUrl() ?? _settings.LastUrl;
         }

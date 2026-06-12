@@ -3,7 +3,7 @@ namespace LiteTubeDock.Constants;
 public static class AppConstants
 {
     public const string AppName = "LiteTube Dock";
-    public const string AppVersion = "0.1.2";
+    public const string AppVersion = "0.1.3";
     public const string HelpWindowTitle = "LiteTube Dock ヘルプ";
     public const string AboutWindowTitle = "LiteTube Dock バージョン情報";
     public const string PlayerModeDiagnosticsTitle = "プレイヤーモード診断";
@@ -137,8 +137,14 @@ LiteTube Dock 起動引数
 --url "https://www.youtube.com/"
   起動時に指定URLを一時的に開きます。
 
+--ipc-enabled
+  LiteTubeDockControlとの連携用Named Pipe受信機能を有効にします。
+
 --help
   このヘルプを表示します。
+
+使用例:
+  LiteTubeDock.exe --player-mode --ipc-enabled --url "https://www.youtube.com/"
 """;
 
     public static bool TryGetWindowSizePreset(string preset, out double width, out double height)

@@ -7,6 +7,7 @@ public static class StartupArgumentService
     public static StartupOptions Parse(IEnumerable<string> args)
     {
         var isPlayerMode = false;
+        var enableIpc = false;
         var showHelp = false;
         string? initialUrl = null;
 
@@ -22,6 +23,12 @@ public static class StartupArgumentService
             if (arg.Equals("--player-mode", StringComparison.OrdinalIgnoreCase))
             {
                 isPlayerMode = true;
+                continue;
+            }
+
+            if (arg.Equals("--ipc-enabled", StringComparison.OrdinalIgnoreCase))
+            {
+                enableIpc = true;
                 continue;
             }
 
@@ -53,6 +60,7 @@ public static class StartupArgumentService
         return new StartupOptions
         {
             IsPlayerMode = isPlayerMode,
+            EnableIpc = enableIpc,
             InitialUrl = initialUrl,
             ShowHelp = showHelp
         };

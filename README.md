@@ -155,9 +155,21 @@ dotnet run
 LiteTubeDock.exe --player-mode
 LiteTubeDock.exe --url "https://www.youtube.com/"
 LiteTubeDock.exe --player-mode --url "https://www.youtube.com/"
+LiteTubeDock.exe --player-mode --ipc-enabled --url "https://www.youtube.com/"
 ```
 
 `--player-mode` は、LiteTube Dock Control などから複数起動する用途を想定した表示領域優先モードです。メニュー、アドレスバー、お気に入りボタン、ステータスバーを隠して、指定URLまたは既定URLを表示します。`--url` で渡したURLは一時的な表示対象として扱い、お気に入り設定へ自動登録しません。
+
+`--ipc-enabled` は、LiteTubeDockControlとの連携用Named Pipe受信機能を有効にします。通常起動、`--player-mode` のみ、`--url` 指定のみではNamed Pipe待受を開始しません。
+
+## 外部URL制御
+
+通常利用では意識する必要のない内部連携機能として、`--ipc-enabled` 指定時だけ、起動中のLiteTube DockプロセスはPID別のNamed Pipeを開きます。
+
+- Pipe名: `LiteTubeDock_{PID}`
+- 対応コマンド: `ping` / `navigate` / `get-status`
+
+`navigate` は `http://` または `https://` のURLだけを受け付け、指定URLへ一時的に移動します。この操作では `LastUrl`、`bookmarks.json`、お気に入りボタン設定は更新しません。
 
 ## 設定ファイル
 
