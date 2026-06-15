@@ -9,14 +9,21 @@ namespace LiteTubeDock.Services;
 public sealed class NamedPipeServerService : IDisposable
 {
     private readonly Func<string, CancellationToken, Task<string>> _commandHandler;
+    private readonly Action<string> _log;
+    private readonly Action<string?> _recordError;
     private readonly CancellationTokenSource _stopTokenSource = new();
     private Task? _serverTask;
     private string _pipeName = string.Empty;
     private bool _disposed;
 
-    public NamedPipeServerService(Func<string, CancellationToken, Task<string>> commandHandler)
+    public NamedPipeServerService(
+        Func<string, CancellationToken, Task<string>> commandHandler,
+        Action<string>? log = null,
+        Action<string?>? recordError = null)
     {
         _commandHandler = commandHandler;
+        _log = log ?? (_ => { });
+        _recordError = recordError ?? (_ => { });
     }
 
     public void Start(string pipeName)
@@ -29,8 +36,10 @@ public sealed class NamedPipeServerService : IDisposable
         }
 
         _pipeName = pipeName;
+        _log($"Start requested. PipeName: {_pipeName}");
         _serverTask = Task.Run(() => RunServerAsync(_stopTokenSource.Token));
         Debug.WriteLine($"Named pipe server started: {_pipeName}");
+        _log("Start result: Success");
     }
 
     public async Task StopAsync()
@@ -54,10 +63,13 @@ public sealed class NamedPipeServerService : IDisposable
         catch (Exception ex)
         {
             Debug.WriteLine($"Named pipe server stop failed: {ex}");
+            _recordError(ex.Message);
+            _log($"Server stop failed. ExceptionType: {ex.GetType().Name}; Message: {ex.Message}");
         }
         finally
         {
             Debug.WriteLine($"Named pipe server stopped: {_pipeName}");
+            _log("ServerStopped");
         }
     }
 
@@ -80,32 +92,50 @@ public sealed class NamedPipeServerService : IDisposable
             try
             {
                 await using var pipe = CreatePipe();
+                _log("WaitingForConnection");
                 await pipe.WaitForConnectionAsync(cancellationToken);
                 Debug.WriteLine($"Named pipe connection accepted: {_pipeName}");
+                _log("ClientConnected");
 
-                var request = await ReadRequestAsync(pipe, cancellationToken);
-                var response = await _commandHandler(request, cancellationToken);
-                await WriteResponseAsync(pipe, response, cancellationToken);
+                using var commandTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                commandTokenSource.CancelAfter(IpcConstants.PipeCommandTimeoutMilliseconds);
+
+                _log("ReadStarted");
+                var request = await ReadRequestAsync(pipe, commandTokenSource.Token);
+                var response = await _commandHandler(request, commandTokenSource.Token);
+                await WriteResponseAsync(pipe, response, commandTokenSource.Token);
+                _log("ResponseSent");
+                _log("ClientDisconnected");
             }
             catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
+                _log("Cancelled");
                 break;
+            }
+            catch (OperationCanceledException ex)
+            {
+                Debug.WriteLine($"Named pipe command timed out: {ex.Message}");
+                _recordError(ex.Message);
+                _log($"ConnectionTimedOut. ExceptionType: {ex.GetType().Name}; Message: {ex.Message}");
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Named pipe server error: {ex}");
+                _recordError(ex.Message);
+                _log($"Server error. ExceptionType: {ex.GetType().Name}; Message: {ex.Message}");
             }
         }
     }
 
     private NamedPipeServerStream CreatePipe()
     {
+        _log("CurrentUserOnly: True");
         return new NamedPipeServerStream(
             _pipeName,
             PipeDirection.InOut,
             maxNumberOfServerInstances: 1,
             PipeTransmissionMode.Message,
-            PipeOptions.Asynchronous);
+            PipeOptions.Asynchronous | PipeOptions.CurrentUserOnly);
     }
 
     private static async Task<string> ReadRequestAsync(
@@ -114,6 +144,7 @@ public sealed class NamedPipeServerService : IDisposable
     {
         using var memory = new MemoryStream();
         var buffer = new byte[1024];
+        var exceededMaxBytes = false;
 
         do
         {
@@ -123,13 +154,24 @@ public sealed class NamedPipeServerService : IDisposable
                 break;
             }
 
-            memory.Write(buffer, 0, bytesRead);
-            if (memory.Length > IpcConstants.MaxCommandBytes)
+            if (!exceededMaxBytes)
             {
-                break;
+                if (memory.Length + bytesRead > IpcConstants.MaxCommandBytes)
+                {
+                    exceededMaxBytes = true;
+                }
+                else
+                {
+                    memory.Write(buffer, 0, bytesRead);
+                }
             }
         }
         while (!pipe.IsMessageComplete);
+
+        if (exceededMaxBytes)
+        {
+            return "{";
+        }
 
         return Encoding.UTF8.GetString(memory.ToArray());
     }

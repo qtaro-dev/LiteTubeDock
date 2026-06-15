@@ -55,7 +55,7 @@
                             <ColumnDefinition Width="70" />
                             <ColumnDefinition Width="120" />
                         </Grid.ColumnDefinitions>
-                        <Border x:Name="FavoriteSlotNumberBand01" Grid.Row="0" Grid.RowSpan="6" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
+                        <Border x:Name="FavoriteSlotNumberBand01" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
                             <TextBlock x:Name="FavoriteSlotNumberText01" Text="01" Style="{StaticResource FavoriteSlotNumberTextStyle}" />
                         </Border>
                         <CheckBox x:Name="FavoriteEnabledCheckBox01" Grid.Row="0" Grid.Column="1" Content="有効" Margin="4" VerticalAlignment="Center" />
@@ -82,19 +82,13 @@
                             <Button x:Name="FavoriteForegroundColorButton01" Width="22" Height="22" Margin="2" />
                             <CheckBox x:Name="FavoriteBoldCheckBox01" Content="太字" Margin="16,4,4,4" VerticalAlignment="Center" />
                         </StackPanel>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Text="形状" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal" Margin="0">
-                            <ComboBox x:Name="FavoriteIconShapeComboBox01" Width="120" Margin="4"><ComboBoxItem Content="四角" /><ComboBoxItem Content="横長" /></ComboBox>
-                            <CheckBox x:Name="FavoriteIconRoundedCheckBox01" Content="角丸" Margin="16,4,4,4" VerticalAlignment="Center" />
-                        </StackPanel>
-                        <TextBlock Grid.Row="5" Grid.Column="1" Text="再生" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
-                            <TextBlock Text="再生モード" Margin="4" VerticalAlignment="Center" />
-                            <ComboBox x:Name="FavoritePlaybackModeComboBox01" Width="120" Margin="4"><ComboBoxItem Content="通常" /><ComboBoxItem Content="プレイヤー" /></ComboBox>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="再生モード" Margin="4" VerticalAlignment="Center" />
+                        <StackPanel Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
+                            <TextBlock Text="スタート位置" Margin="4" VerticalAlignment="Center" />
+                            <TextBox x:Name="FavoriteStartPositionTextBox01" Width="90" Margin="4" Text="00:00:00" HorizontalContentAlignment="Right" />
                             <CheckBox x:Name="FavoriteAutoplayCheckBox01" Content="自動再生" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteMuteCheckBox01" Content="ミュート" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteLoopCheckBox01" Content="ループ" Margin="16,4,4,4" VerticalAlignment="Center" />
-                            <CheckBox x:Name="FavoriteResumeCheckBox01" Content="リジューム" Margin="16,4,4,4" VerticalAlignment="Center" />
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -104,7 +98,7 @@
                         <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" /></Grid.RowDefinitions>
                         <Grid.ColumnDefinitions><ColumnDefinition Width="56" /><ColumnDefinition Width="70" /><ColumnDefinition Width="*" /><ColumnDefinition Width="70" /><ColumnDefinition Width="120" /></Grid.ColumnDefinitions>
-                        <Border x:Name="FavoriteSlotNumberBand02" Grid.Row="0" Grid.RowSpan="6" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
+                        <Border x:Name="FavoriteSlotNumberBand02" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
                             <TextBlock x:Name="FavoriteSlotNumberText02" Text="02" Style="{StaticResource FavoriteSlotNumberTextStyle}" />
                         </Border>
                         <CheckBox x:Name="FavoriteEnabledCheckBox02" Grid.Row="0" Grid.Column="1" Content="有効" Margin="4" VerticalAlignment="Center" />
@@ -125,16 +119,13 @@
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
                         <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal"><TextBox x:Name="FavoriteBackgroundColorTextBox02" Width="90" Margin="4" /><Button x:Name="FavoriteBackgroundColorButton02" Width="22" Height="22" Margin="2" /><TextBlock Text="文字色" Margin="16,4,4,4" VerticalAlignment="Center" /><TextBox x:Name="FavoriteForegroundColorTextBox02" Width="90" Margin="4" /><Button x:Name="FavoriteForegroundColorButton02" Width="22" Height="22" Margin="2" />
                             <CheckBox x:Name="FavoriteBoldCheckBox02" Content="太字" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Text="形状" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal"><ComboBox x:Name="FavoriteIconShapeComboBox02" Width="120" Margin="4"><ComboBoxItem Content="四角" /><ComboBoxItem Content="横長" /></ComboBox><CheckBox x:Name="FavoriteIconRoundedCheckBox02" Content="角丸" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="5" Grid.Column="1" Text="再生" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
-                            <TextBlock Text="再生モード" Margin="4" VerticalAlignment="Center" />
-                            <ComboBox x:Name="FavoritePlaybackModeComboBox02" Width="120" Margin="4"><ComboBoxItem Content="通常" /><ComboBoxItem Content="プレイヤー" /></ComboBox>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="再生モード" Margin="4" VerticalAlignment="Center" />
+                        <StackPanel Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
+                            <TextBlock Text="スタート位置" Margin="4" VerticalAlignment="Center" />
+                            <TextBox x:Name="FavoriteStartPositionTextBox02" Width="90" Margin="4" Text="00:00:00" HorizontalContentAlignment="Right" />
                             <CheckBox x:Name="FavoriteAutoplayCheckBox02" Content="自動再生" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteMuteCheckBox02" Content="ミュート" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteLoopCheckBox02" Content="ループ" Margin="16,4,4,4" VerticalAlignment="Center" />
-                            <CheckBox x:Name="FavoriteResumeCheckBox02" Content="リジューム" Margin="16,4,4,4" VerticalAlignment="Center" />
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -144,7 +135,7 @@
                         <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" /></Grid.RowDefinitions>
                         <Grid.ColumnDefinitions><ColumnDefinition Width="56" /><ColumnDefinition Width="70" /><ColumnDefinition Width="*" /><ColumnDefinition Width="70" /><ColumnDefinition Width="120" /></Grid.ColumnDefinitions>
-                        <Border x:Name="FavoriteSlotNumberBand03" Grid.Row="0" Grid.RowSpan="6" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
+                        <Border x:Name="FavoriteSlotNumberBand03" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
                             <TextBlock x:Name="FavoriteSlotNumberText03" Text="03" Style="{StaticResource FavoriteSlotNumberTextStyle}" />
                         </Border>
                         <CheckBox x:Name="FavoriteEnabledCheckBox03" Grid.Row="0" Grid.Column="1" Content="有効" Margin="4" VerticalAlignment="Center" />
@@ -165,16 +156,13 @@
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
                         <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal"><TextBox x:Name="FavoriteBackgroundColorTextBox03" Width="90" Margin="4" /><Button x:Name="FavoriteBackgroundColorButton03" Width="22" Height="22" Margin="2" /><TextBlock Text="文字色" Margin="16,4,4,4" VerticalAlignment="Center" /><TextBox x:Name="FavoriteForegroundColorTextBox03" Width="90" Margin="4" /><Button x:Name="FavoriteForegroundColorButton03" Width="22" Height="22" Margin="2" />
                             <CheckBox x:Name="FavoriteBoldCheckBox03" Content="太字" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Text="形状" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal"><ComboBox x:Name="FavoriteIconShapeComboBox03" Width="120" Margin="4"><ComboBoxItem Content="四角" /><ComboBoxItem Content="横長" /></ComboBox><CheckBox x:Name="FavoriteIconRoundedCheckBox03" Content="角丸" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="5" Grid.Column="1" Text="再生" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
-                            <TextBlock Text="再生モード" Margin="4" VerticalAlignment="Center" />
-                            <ComboBox x:Name="FavoritePlaybackModeComboBox03" Width="120" Margin="4"><ComboBoxItem Content="通常" /><ComboBoxItem Content="プレイヤー" /></ComboBox>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="再生モード" Margin="4" VerticalAlignment="Center" />
+                        <StackPanel Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
+                            <TextBlock Text="スタート位置" Margin="4" VerticalAlignment="Center" />
+                            <TextBox x:Name="FavoriteStartPositionTextBox03" Width="90" Margin="4" Text="00:00:00" HorizontalContentAlignment="Right" />
                             <CheckBox x:Name="FavoriteAutoplayCheckBox03" Content="自動再生" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteMuteCheckBox03" Content="ミュート" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteLoopCheckBox03" Content="ループ" Margin="16,4,4,4" VerticalAlignment="Center" />
-                            <CheckBox x:Name="FavoriteResumeCheckBox03" Content="リジューム" Margin="16,4,4,4" VerticalAlignment="Center" />
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -184,7 +172,7 @@
                         <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" /></Grid.RowDefinitions>
                         <Grid.ColumnDefinitions><ColumnDefinition Width="56" /><ColumnDefinition Width="70" /><ColumnDefinition Width="*" /><ColumnDefinition Width="70" /><ColumnDefinition Width="120" /></Grid.ColumnDefinitions>
-                        <Border x:Name="FavoriteSlotNumberBand04" Grid.Row="0" Grid.RowSpan="6" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
+                        <Border x:Name="FavoriteSlotNumberBand04" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
                             <TextBlock x:Name="FavoriteSlotNumberText04" Text="04" Style="{StaticResource FavoriteSlotNumberTextStyle}" />
                         </Border>
                         <CheckBox x:Name="FavoriteEnabledCheckBox04" Grid.Row="0" Grid.Column="1" Content="有効" Margin="4" VerticalAlignment="Center" />
@@ -205,16 +193,13 @@
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
                         <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal"><TextBox x:Name="FavoriteBackgroundColorTextBox04" Width="90" Margin="4" /><Button x:Name="FavoriteBackgroundColorButton04" Width="22" Height="22" Margin="2" /><TextBlock Text="文字色" Margin="16,4,4,4" VerticalAlignment="Center" /><TextBox x:Name="FavoriteForegroundColorTextBox04" Width="90" Margin="4" /><Button x:Name="FavoriteForegroundColorButton04" Width="22" Height="22" Margin="2" />
                             <CheckBox x:Name="FavoriteBoldCheckBox04" Content="太字" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Text="形状" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal"><ComboBox x:Name="FavoriteIconShapeComboBox04" Width="120" Margin="4"><ComboBoxItem Content="四角" /><ComboBoxItem Content="横長" /></ComboBox><CheckBox x:Name="FavoriteIconRoundedCheckBox04" Content="角丸" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="5" Grid.Column="1" Text="再生" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
-                            <TextBlock Text="再生モード" Margin="4" VerticalAlignment="Center" />
-                            <ComboBox x:Name="FavoritePlaybackModeComboBox04" Width="120" Margin="4"><ComboBoxItem Content="通常" /><ComboBoxItem Content="プレイヤー" /></ComboBox>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="再生モード" Margin="4" VerticalAlignment="Center" />
+                        <StackPanel Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
+                            <TextBlock Text="スタート位置" Margin="4" VerticalAlignment="Center" />
+                            <TextBox x:Name="FavoriteStartPositionTextBox04" Width="90" Margin="4" Text="00:00:00" HorizontalContentAlignment="Right" />
                             <CheckBox x:Name="FavoriteAutoplayCheckBox04" Content="自動再生" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteMuteCheckBox04" Content="ミュート" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteLoopCheckBox04" Content="ループ" Margin="16,4,4,4" VerticalAlignment="Center" />
-                            <CheckBox x:Name="FavoriteResumeCheckBox04" Content="リジューム" Margin="16,4,4,4" VerticalAlignment="Center" />
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -224,7 +209,7 @@
                         <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" /></Grid.RowDefinitions>
                         <Grid.ColumnDefinitions><ColumnDefinition Width="56" /><ColumnDefinition Width="70" /><ColumnDefinition Width="*" /><ColumnDefinition Width="70" /><ColumnDefinition Width="120" /></Grid.ColumnDefinitions>
-                        <Border x:Name="FavoriteSlotNumberBand05" Grid.Row="0" Grid.RowSpan="6" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
+                        <Border x:Name="FavoriteSlotNumberBand05" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
                             <TextBlock x:Name="FavoriteSlotNumberText05" Text="05" Style="{StaticResource FavoriteSlotNumberTextStyle}" />
                         </Border>
                         <CheckBox x:Name="FavoriteEnabledCheckBox05" Grid.Row="0" Grid.Column="1" Content="有効" Margin="4" VerticalAlignment="Center" />
@@ -245,16 +230,13 @@
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
                         <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal"><TextBox x:Name="FavoriteBackgroundColorTextBox05" Width="90" Margin="4" /><Button x:Name="FavoriteBackgroundColorButton05" Width="22" Height="22" Margin="2" /><TextBlock Text="文字色" Margin="16,4,4,4" VerticalAlignment="Center" /><TextBox x:Name="FavoriteForegroundColorTextBox05" Width="90" Margin="4" /><Button x:Name="FavoriteForegroundColorButton05" Width="22" Height="22" Margin="2" />
                             <CheckBox x:Name="FavoriteBoldCheckBox05" Content="太字" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Text="形状" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal"><ComboBox x:Name="FavoriteIconShapeComboBox05" Width="120" Margin="4"><ComboBoxItem Content="四角" /><ComboBoxItem Content="横長" /></ComboBox><CheckBox x:Name="FavoriteIconRoundedCheckBox05" Content="角丸" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="5" Grid.Column="1" Text="再生" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
-                            <TextBlock Text="再生モード" Margin="4" VerticalAlignment="Center" />
-                            <ComboBox x:Name="FavoritePlaybackModeComboBox05" Width="120" Margin="4"><ComboBoxItem Content="通常" /><ComboBoxItem Content="プレイヤー" /></ComboBox>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="再生モード" Margin="4" VerticalAlignment="Center" />
+                        <StackPanel Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
+                            <TextBlock Text="スタート位置" Margin="4" VerticalAlignment="Center" />
+                            <TextBox x:Name="FavoriteStartPositionTextBox05" Width="90" Margin="4" Text="00:00:00" HorizontalContentAlignment="Right" />
                             <CheckBox x:Name="FavoriteAutoplayCheckBox05" Content="自動再生" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteMuteCheckBox05" Content="ミュート" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteLoopCheckBox05" Content="ループ" Margin="16,4,4,4" VerticalAlignment="Center" />
-                            <CheckBox x:Name="FavoriteResumeCheckBox05" Content="リジューム" Margin="16,4,4,4" VerticalAlignment="Center" />
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -264,7 +246,7 @@
                         <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" /></Grid.RowDefinitions>
                         <Grid.ColumnDefinitions><ColumnDefinition Width="56" /><ColumnDefinition Width="70" /><ColumnDefinition Width="*" /><ColumnDefinition Width="70" /><ColumnDefinition Width="120" /></Grid.ColumnDefinitions>
-                        <Border x:Name="FavoriteSlotNumberBand06" Grid.Row="0" Grid.RowSpan="6" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
+                        <Border x:Name="FavoriteSlotNumberBand06" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
                             <TextBlock x:Name="FavoriteSlotNumberText06" Text="06" Style="{StaticResource FavoriteSlotNumberTextStyle}" />
                         </Border>
                         <CheckBox x:Name="FavoriteEnabledCheckBox06" Grid.Row="0" Grid.Column="1" Content="有効" Margin="4" VerticalAlignment="Center" />
@@ -285,16 +267,13 @@
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
                         <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal"><TextBox x:Name="FavoriteBackgroundColorTextBox06" Width="90" Margin="4" /><Button x:Name="FavoriteBackgroundColorButton06" Width="22" Height="22" Margin="2" /><TextBlock Text="文字色" Margin="16,4,4,4" VerticalAlignment="Center" /><TextBox x:Name="FavoriteForegroundColorTextBox06" Width="90" Margin="4" /><Button x:Name="FavoriteForegroundColorButton06" Width="22" Height="22" Margin="2" />
                             <CheckBox x:Name="FavoriteBoldCheckBox06" Content="太字" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Text="形状" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal"><ComboBox x:Name="FavoriteIconShapeComboBox06" Width="120" Margin="4"><ComboBoxItem Content="四角" /><ComboBoxItem Content="横長" /></ComboBox><CheckBox x:Name="FavoriteIconRoundedCheckBox06" Content="角丸" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="5" Grid.Column="1" Text="再生" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
-                            <TextBlock Text="再生モード" Margin="4" VerticalAlignment="Center" />
-                            <ComboBox x:Name="FavoritePlaybackModeComboBox06" Width="120" Margin="4"><ComboBoxItem Content="通常" /><ComboBoxItem Content="プレイヤー" /></ComboBox>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="再生モード" Margin="4" VerticalAlignment="Center" />
+                        <StackPanel Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
+                            <TextBlock Text="スタート位置" Margin="4" VerticalAlignment="Center" />
+                            <TextBox x:Name="FavoriteStartPositionTextBox06" Width="90" Margin="4" Text="00:00:00" HorizontalContentAlignment="Right" />
                             <CheckBox x:Name="FavoriteAutoplayCheckBox06" Content="自動再生" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteMuteCheckBox06" Content="ミュート" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteLoopCheckBox06" Content="ループ" Margin="16,4,4,4" VerticalAlignment="Center" />
-                            <CheckBox x:Name="FavoriteResumeCheckBox06" Content="リジューム" Margin="16,4,4,4" VerticalAlignment="Center" />
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -304,7 +283,7 @@
                         <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" /></Grid.RowDefinitions>
                         <Grid.ColumnDefinitions><ColumnDefinition Width="56" /><ColumnDefinition Width="70" /><ColumnDefinition Width="*" /><ColumnDefinition Width="70" /><ColumnDefinition Width="120" /></Grid.ColumnDefinitions>
-                        <Border x:Name="FavoriteSlotNumberBand07" Grid.Row="0" Grid.RowSpan="6" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
+                        <Border x:Name="FavoriteSlotNumberBand07" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
                             <TextBlock x:Name="FavoriteSlotNumberText07" Text="07" Style="{StaticResource FavoriteSlotNumberTextStyle}" />
                         </Border>
                         <CheckBox x:Name="FavoriteEnabledCheckBox07" Grid.Row="0" Grid.Column="1" Content="有効" Margin="4" VerticalAlignment="Center" />
@@ -325,16 +304,13 @@
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
                         <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal"><TextBox x:Name="FavoriteBackgroundColorTextBox07" Width="90" Margin="4" /><Button x:Name="FavoriteBackgroundColorButton07" Width="22" Height="22" Margin="2" /><TextBlock Text="文字色" Margin="16,4,4,4" VerticalAlignment="Center" /><TextBox x:Name="FavoriteForegroundColorTextBox07" Width="90" Margin="4" /><Button x:Name="FavoriteForegroundColorButton07" Width="22" Height="22" Margin="2" />
                             <CheckBox x:Name="FavoriteBoldCheckBox07" Content="太字" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Text="形状" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal"><ComboBox x:Name="FavoriteIconShapeComboBox07" Width="120" Margin="4"><ComboBoxItem Content="四角" /><ComboBoxItem Content="横長" /></ComboBox><CheckBox x:Name="FavoriteIconRoundedCheckBox07" Content="角丸" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="5" Grid.Column="1" Text="再生" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
-                            <TextBlock Text="再生モード" Margin="4" VerticalAlignment="Center" />
-                            <ComboBox x:Name="FavoritePlaybackModeComboBox07" Width="120" Margin="4"><ComboBoxItem Content="通常" /><ComboBoxItem Content="プレイヤー" /></ComboBox>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="再生モード" Margin="4" VerticalAlignment="Center" />
+                        <StackPanel Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
+                            <TextBlock Text="スタート位置" Margin="4" VerticalAlignment="Center" />
+                            <TextBox x:Name="FavoriteStartPositionTextBox07" Width="90" Margin="4" Text="00:00:00" HorizontalContentAlignment="Right" />
                             <CheckBox x:Name="FavoriteAutoplayCheckBox07" Content="自動再生" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteMuteCheckBox07" Content="ミュート" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteLoopCheckBox07" Content="ループ" Margin="16,4,4,4" VerticalAlignment="Center" />
-                            <CheckBox x:Name="FavoriteResumeCheckBox07" Content="リジューム" Margin="16,4,4,4" VerticalAlignment="Center" />
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -344,7 +320,7 @@
                         <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" /></Grid.RowDefinitions>
                         <Grid.ColumnDefinitions><ColumnDefinition Width="56" /><ColumnDefinition Width="70" /><ColumnDefinition Width="*" /><ColumnDefinition Width="70" /><ColumnDefinition Width="120" /></Grid.ColumnDefinitions>
-                        <Border x:Name="FavoriteSlotNumberBand08" Grid.Row="0" Grid.RowSpan="6" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
+                        <Border x:Name="FavoriteSlotNumberBand08" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
                             <TextBlock x:Name="FavoriteSlotNumberText08" Text="08" Style="{StaticResource FavoriteSlotNumberTextStyle}" />
                         </Border>
                         <CheckBox x:Name="FavoriteEnabledCheckBox08" Grid.Row="0" Grid.Column="1" Content="有効" Margin="4" VerticalAlignment="Center" />
@@ -365,16 +341,13 @@
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
                         <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal"><TextBox x:Name="FavoriteBackgroundColorTextBox08" Width="90" Margin="4" /><Button x:Name="FavoriteBackgroundColorButton08" Width="22" Height="22" Margin="2" /><TextBlock Text="文字色" Margin="16,4,4,4" VerticalAlignment="Center" /><TextBox x:Name="FavoriteForegroundColorTextBox08" Width="90" Margin="4" /><Button x:Name="FavoriteForegroundColorButton08" Width="22" Height="22" Margin="2" />
                             <CheckBox x:Name="FavoriteBoldCheckBox08" Content="太字" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Text="形状" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal"><ComboBox x:Name="FavoriteIconShapeComboBox08" Width="120" Margin="4"><ComboBoxItem Content="四角" /><ComboBoxItem Content="横長" /></ComboBox><CheckBox x:Name="FavoriteIconRoundedCheckBox08" Content="角丸" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="5" Grid.Column="1" Text="再生" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
-                            <TextBlock Text="再生モード" Margin="4" VerticalAlignment="Center" />
-                            <ComboBox x:Name="FavoritePlaybackModeComboBox08" Width="120" Margin="4"><ComboBoxItem Content="通常" /><ComboBoxItem Content="プレイヤー" /></ComboBox>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="再生モード" Margin="4" VerticalAlignment="Center" />
+                        <StackPanel Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
+                            <TextBlock Text="スタート位置" Margin="4" VerticalAlignment="Center" />
+                            <TextBox x:Name="FavoriteStartPositionTextBox08" Width="90" Margin="4" Text="00:00:00" HorizontalContentAlignment="Right" />
                             <CheckBox x:Name="FavoriteAutoplayCheckBox08" Content="自動再生" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteMuteCheckBox08" Content="ミュート" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteLoopCheckBox08" Content="ループ" Margin="16,4,4,4" VerticalAlignment="Center" />
-                            <CheckBox x:Name="FavoriteResumeCheckBox08" Content="リジューム" Margin="16,4,4,4" VerticalAlignment="Center" />
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -384,7 +357,7 @@
                         <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" /></Grid.RowDefinitions>
                         <Grid.ColumnDefinitions><ColumnDefinition Width="56" /><ColumnDefinition Width="70" /><ColumnDefinition Width="*" /><ColumnDefinition Width="70" /><ColumnDefinition Width="120" /></Grid.ColumnDefinitions>
-                        <Border x:Name="FavoriteSlotNumberBand09" Grid.Row="0" Grid.RowSpan="6" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
+                        <Border x:Name="FavoriteSlotNumberBand09" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
                             <TextBlock x:Name="FavoriteSlotNumberText09" Text="09" Style="{StaticResource FavoriteSlotNumberTextStyle}" />
                         </Border>
                         <CheckBox x:Name="FavoriteEnabledCheckBox09" Grid.Row="0" Grid.Column="1" Content="有効" Margin="4" VerticalAlignment="Center" />
@@ -405,16 +378,13 @@
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
                         <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal"><TextBox x:Name="FavoriteBackgroundColorTextBox09" Width="90" Margin="4" /><Button x:Name="FavoriteBackgroundColorButton09" Width="22" Height="22" Margin="2" /><TextBlock Text="文字色" Margin="16,4,4,4" VerticalAlignment="Center" /><TextBox x:Name="FavoriteForegroundColorTextBox09" Width="90" Margin="4" /><Button x:Name="FavoriteForegroundColorButton09" Width="22" Height="22" Margin="2" />
                             <CheckBox x:Name="FavoriteBoldCheckBox09" Content="太字" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Text="形状" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal"><ComboBox x:Name="FavoriteIconShapeComboBox09" Width="120" Margin="4"><ComboBoxItem Content="四角" /><ComboBoxItem Content="横長" /></ComboBox><CheckBox x:Name="FavoriteIconRoundedCheckBox09" Content="角丸" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="5" Grid.Column="1" Text="再生" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
-                            <TextBlock Text="再生モード" Margin="4" VerticalAlignment="Center" />
-                            <ComboBox x:Name="FavoritePlaybackModeComboBox09" Width="120" Margin="4"><ComboBoxItem Content="通常" /><ComboBoxItem Content="プレイヤー" /></ComboBox>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="再生モード" Margin="4" VerticalAlignment="Center" />
+                        <StackPanel Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
+                            <TextBlock Text="スタート位置" Margin="4" VerticalAlignment="Center" />
+                            <TextBox x:Name="FavoriteStartPositionTextBox09" Width="90" Margin="4" Text="00:00:00" HorizontalContentAlignment="Right" />
                             <CheckBox x:Name="FavoriteAutoplayCheckBox09" Content="自動再生" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteMuteCheckBox09" Content="ミュート" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteLoopCheckBox09" Content="ループ" Margin="16,4,4,4" VerticalAlignment="Center" />
-                            <CheckBox x:Name="FavoriteResumeCheckBox09" Content="リジューム" Margin="16,4,4,4" VerticalAlignment="Center" />
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -424,7 +394,7 @@
                         <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" /></Grid.RowDefinitions>
                         <Grid.ColumnDefinitions><ColumnDefinition Width="56" /><ColumnDefinition Width="70" /><ColumnDefinition Width="*" /><ColumnDefinition Width="70" /><ColumnDefinition Width="120" /></Grid.ColumnDefinitions>
-                        <Border x:Name="FavoriteSlotNumberBand10" Grid.Row="0" Grid.RowSpan="6" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
+                        <Border x:Name="FavoriteSlotNumberBand10" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Style="{StaticResource FavoriteSlotNumberBandStyle}">
                             <TextBlock x:Name="FavoriteSlotNumberText10" Text="10" Style="{StaticResource FavoriteSlotNumberTextStyle}" />
                         </Border>
                         <CheckBox x:Name="FavoriteEnabledCheckBox10" Grid.Row="0" Grid.Column="1" Content="有効" Margin="4" VerticalAlignment="Center" />
@@ -445,16 +415,13 @@
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
                         <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal"><TextBox x:Name="FavoriteBackgroundColorTextBox10" Width="90" Margin="4" /><Button x:Name="FavoriteBackgroundColorButton10" Width="22" Height="22" Margin="2" /><TextBlock Text="文字色" Margin="16,4,4,4" VerticalAlignment="Center" /><TextBox x:Name="FavoriteForegroundColorTextBox10" Width="90" Margin="4" /><Button x:Name="FavoriteForegroundColorButton10" Width="22" Height="22" Margin="2" />
                             <CheckBox x:Name="FavoriteBoldCheckBox10" Content="太字" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Text="形状" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal"><ComboBox x:Name="FavoriteIconShapeComboBox10" Width="120" Margin="4"><ComboBoxItem Content="四角" /><ComboBoxItem Content="横長" /></ComboBox><CheckBox x:Name="FavoriteIconRoundedCheckBox10" Content="角丸" Margin="16,4,4,4" VerticalAlignment="Center" /></StackPanel>
-                        <TextBlock Grid.Row="5" Grid.Column="1" Text="再生" Margin="4" VerticalAlignment="Center" />
-                        <StackPanel Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
-                            <TextBlock Text="再生モード" Margin="4" VerticalAlignment="Center" />
-                            <ComboBox x:Name="FavoritePlaybackModeComboBox10" Width="120" Margin="4"><ComboBoxItem Content="通常" /><ComboBoxItem Content="プレイヤー" /></ComboBox>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="再生モード" Margin="4" VerticalAlignment="Center" />
+                        <StackPanel Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0">
+                            <TextBlock Text="スタート位置" Margin="4" VerticalAlignment="Center" />
+                            <TextBox x:Name="FavoriteStartPositionTextBox10" Width="90" Margin="4" Text="00:00:00" HorizontalContentAlignment="Right" />
                             <CheckBox x:Name="FavoriteAutoplayCheckBox10" Content="自動再生" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteMuteCheckBox10" Content="ミュート" Margin="16,4,4,4" VerticalAlignment="Center" />
                             <CheckBox x:Name="FavoriteLoopCheckBox10" Content="ループ" Margin="16,4,4,4" VerticalAlignment="Center" />
-                            <CheckBox x:Name="FavoriteResumeCheckBox10" Content="リジューム" Margin="16,4,4,4" VerticalAlignment="Center" />
                         </StackPanel>
                     </Grid>
                 </Border>

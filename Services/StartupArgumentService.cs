@@ -1,4 +1,5 @@
 using LiteTubeDock.Models;
+using LiteTubeDock.Constants;
 
 namespace LiteTubeDock.Services;
 
@@ -8,6 +9,8 @@ public static class StartupArgumentService
     {
         var isPlayerMode = false;
         var enableIpc = false;
+        var startPaused = false;
+        var keepMuted = false;
         var showHelp = false;
         string? initialUrl = null;
 
@@ -29,6 +32,18 @@ public static class StartupArgumentService
             if (arg.Equals("--ipc-enabled", StringComparison.OrdinalIgnoreCase))
             {
                 enableIpc = true;
+                continue;
+            }
+
+            if (arg.Equals("--start-paused", StringComparison.OrdinalIgnoreCase))
+            {
+                startPaused = true;
+                continue;
+            }
+
+            if (arg.Equals("--keep-muted", StringComparison.OrdinalIgnoreCase))
+            {
+                keepMuted = true;
                 continue;
             }
 
@@ -60,7 +75,9 @@ public static class StartupArgumentService
         return new StartupOptions
         {
             IsPlayerMode = isPlayerMode,
-            EnableIpc = enableIpc,
+            IsIpcEnabled = enableIpc,
+            StartPaused = startPaused,
+            KeepMuted = keepMuted,
             InitialUrl = initialUrl,
             ShowHelp = showHelp
         };
@@ -69,7 +86,7 @@ public static class StartupArgumentService
     private static string? NormalizeUrl(string? value)
     {
         var candidate = value?.Trim().Trim('"');
-        if (string.IsNullOrWhiteSpace(candidate))
+        if (string.IsNullOrWhiteSpace(candidate) || candidate.Length > IpcConstants.MaxUrlLength)
         {
             return null;
         }

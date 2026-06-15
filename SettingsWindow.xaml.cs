@@ -169,7 +169,15 @@ public partial class SettingsWindow : Window
     {
         _generalSettingsView.CollectSettings(_settings);
         _generalSettingsView.ApplyDefaultWindowBounds(_settings);
-        var bookmarks = _favoriteButtonsSettingsView.CollectBookmarks();
+        IReadOnlyList<BookmarkItem> bookmarks;
+        try
+        {
+            bookmarks = _favoriteButtonsSettingsView.CollectBookmarks();
+        }
+        catch (InvalidOperationException)
+        {
+            return;
+        }
 
         _settingsService.Save(_settings);
         _bookmarkService.Save(bookmarks);

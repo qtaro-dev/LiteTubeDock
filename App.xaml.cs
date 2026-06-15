@@ -11,6 +11,7 @@ public partial class App : System.Windows.Application
         base.OnStartup(e);
 
         var startupOptions = StartupArgumentService.Parse(e.Args);
+        DiagnosticLogService.LogStartup(e.Args, startupOptions);
         if (startupOptions.ShowHelp)
         {
             System.Windows.MessageBox.Show(

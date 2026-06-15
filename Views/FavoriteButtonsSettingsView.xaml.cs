@@ -1,6 +1,7 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using LiteTubeDock.Constants;
 using LiteTubeDock.Models;
@@ -10,7 +11,7 @@ using DrawingColor = System.Drawing.Color;
 using WpfButton = System.Windows.Controls.Button;
 using WpfCheckBox = System.Windows.Controls.CheckBox;
 using WpfColor = System.Windows.Media.Color;
-using WpfComboBox = System.Windows.Controls.ComboBox;
+using WpfKeyEventArgs = System.Windows.Input.KeyEventArgs;
 using WpfTextBlock = System.Windows.Controls.TextBlock;
 using WpfTextBox = System.Windows.Controls.TextBox;
 
@@ -28,14 +29,11 @@ public partial class FavoriteButtonsSettingsView : System.Windows.Controls.UserC
     private readonly Border[] _favoriteSlotNumberBands;
     private readonly WpfTextBlock[] _favoriteSlotNumberTexts;
     private readonly WpfButton[] _favoriteIconSelectButtons;
-    private readonly WpfComboBox[] _favoriteIconShapeComboBoxes;
-    private readonly WpfCheckBox[] _favoriteIconRoundedCheckBoxes;
     private readonly WpfCheckBox[] _favoriteBoldCheckBoxes;
-    private readonly WpfComboBox[] _favoritePlaybackModeComboBoxes;
+    private readonly WpfTextBox[] _favoriteStartPositionTextBoxes;
     private readonly WpfCheckBox[] _favoriteAutoplayCheckBoxes;
     private readonly WpfCheckBox[] _favoriteMuteCheckBoxes;
     private readonly WpfCheckBox[] _favoriteLoopCheckBoxes;
-    private readonly WpfCheckBox[] _favoriteResumeCheckBoxes;
     private readonly WpfCheckBox[] _favoriteEnabledCheckBoxes;
     private readonly WpfButton[] _favoriteDeleteButtons;
 
@@ -93,25 +91,15 @@ public partial class FavoriteButtonsSettingsView : System.Windows.Controls.UserC
             FavoriteIconSelectButton01, FavoriteIconSelectButton02, FavoriteIconSelectButton03, FavoriteIconSelectButton04, FavoriteIconSelectButton05,
             FavoriteIconSelectButton06, FavoriteIconSelectButton07, FavoriteIconSelectButton08, FavoriteIconSelectButton09, FavoriteIconSelectButton10
         ];
-        _favoriteIconShapeComboBoxes =
-        [
-            FavoriteIconShapeComboBox01, FavoriteIconShapeComboBox02, FavoriteIconShapeComboBox03, FavoriteIconShapeComboBox04, FavoriteIconShapeComboBox05,
-            FavoriteIconShapeComboBox06, FavoriteIconShapeComboBox07, FavoriteIconShapeComboBox08, FavoriteIconShapeComboBox09, FavoriteIconShapeComboBox10
-        ];
-        _favoriteIconRoundedCheckBoxes =
-        [
-            FavoriteIconRoundedCheckBox01, FavoriteIconRoundedCheckBox02, FavoriteIconRoundedCheckBox03, FavoriteIconRoundedCheckBox04, FavoriteIconRoundedCheckBox05,
-            FavoriteIconRoundedCheckBox06, FavoriteIconRoundedCheckBox07, FavoriteIconRoundedCheckBox08, FavoriteIconRoundedCheckBox09, FavoriteIconRoundedCheckBox10
-        ];
         _favoriteBoldCheckBoxes =
         [
             FavoriteBoldCheckBox01, FavoriteBoldCheckBox02, FavoriteBoldCheckBox03, FavoriteBoldCheckBox04, FavoriteBoldCheckBox05,
             FavoriteBoldCheckBox06, FavoriteBoldCheckBox07, FavoriteBoldCheckBox08, FavoriteBoldCheckBox09, FavoriteBoldCheckBox10
         ];
-        _favoritePlaybackModeComboBoxes =
+        _favoriteStartPositionTextBoxes =
         [
-            FavoritePlaybackModeComboBox01, FavoritePlaybackModeComboBox02, FavoritePlaybackModeComboBox03, FavoritePlaybackModeComboBox04, FavoritePlaybackModeComboBox05,
-            FavoritePlaybackModeComboBox06, FavoritePlaybackModeComboBox07, FavoritePlaybackModeComboBox08, FavoritePlaybackModeComboBox09, FavoritePlaybackModeComboBox10
+            FavoriteStartPositionTextBox01, FavoriteStartPositionTextBox02, FavoriteStartPositionTextBox03, FavoriteStartPositionTextBox04, FavoriteStartPositionTextBox05,
+            FavoriteStartPositionTextBox06, FavoriteStartPositionTextBox07, FavoriteStartPositionTextBox08, FavoriteStartPositionTextBox09, FavoriteStartPositionTextBox10
         ];
         _favoriteAutoplayCheckBoxes =
         [
@@ -127,11 +115,6 @@ public partial class FavoriteButtonsSettingsView : System.Windows.Controls.UserC
         [
             FavoriteLoopCheckBox01, FavoriteLoopCheckBox02, FavoriteLoopCheckBox03, FavoriteLoopCheckBox04, FavoriteLoopCheckBox05,
             FavoriteLoopCheckBox06, FavoriteLoopCheckBox07, FavoriteLoopCheckBox08, FavoriteLoopCheckBox09, FavoriteLoopCheckBox10
-        ];
-        _favoriteResumeCheckBoxes =
-        [
-            FavoriteResumeCheckBox01, FavoriteResumeCheckBox02, FavoriteResumeCheckBox03, FavoriteResumeCheckBox04, FavoriteResumeCheckBox05,
-            FavoriteResumeCheckBox06, FavoriteResumeCheckBox07, FavoriteResumeCheckBox08, FavoriteResumeCheckBox09, FavoriteResumeCheckBox10
         ];
         _favoriteEnabledCheckBoxes =
         [
@@ -158,6 +141,25 @@ public partial class FavoriteButtonsSettingsView : System.Windows.Controls.UserC
 
     public IReadOnlyList<BookmarkItem> CollectBookmarks()
     {
+        var startPositions = new int[AppConstants.MaxBookmarks];
+        for (var index = 0; index < AppConstants.MaxBookmarks; index++)
+        {
+            if (!TryNormalizeStartPositionText(_favoriteStartPositionTextBoxes[index].Text, out var seconds, out var normalized))
+            {
+                var slotNumber = index + 1;
+                System.Windows.MessageBox.Show(
+                    $"お気に入り{slotNumber:00}のスタート位置が不正です。HH:mm:ss または数字のみで入力してください。",
+                    AppConstants.AppName,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                _favoriteStartPositionTextBoxes[index].Focus();
+                throw new InvalidOperationException($"Favorite start position is invalid. Slot={slotNumber}");
+            }
+
+            _favoriteStartPositionTextBoxes[index].Text = normalized;
+            startPositions[index] = seconds;
+        }
+
         return Enumerable.Range(0, AppConstants.MaxBookmarks)
             .Select(index => new BookmarkItem
             {
@@ -166,14 +168,11 @@ public partial class FavoriteButtonsSettingsView : System.Windows.Controls.UserC
                 SortOrder = index + 1,
                 IsEnabled = _favoriteEnabledCheckBoxes[index].IsChecked == true,
                 IconPath = _favoriteIconPathTextBoxes[index].Text.Trim(),
-                IconShape = GetSelectedIconShape(_favoriteIconShapeComboBoxes[index]),
-                IconRounded = _favoriteIconRoundedCheckBoxes[index].IsChecked == true,
                 IsBold = _favoriteBoldCheckBoxes[index].IsChecked == true,
-                PlaybackMode = GetSelectedPlaybackMode(_favoritePlaybackModeComboBoxes[index]),
                 Autoplay = _favoriteAutoplayCheckBoxes[index].IsChecked == true,
                 Mute = _favoriteMuteCheckBoxes[index].IsChecked == true,
                 Loop = _favoriteLoopCheckBoxes[index].IsChecked == true,
-                ResumePlayback = _favoriteResumeCheckBoxes[index].IsChecked == true,
+                StartPositionSeconds = startPositions[index],
                 BackgroundColor = _favoriteBackgroundColorTextBoxes[index].Text.Trim(),
                 ForegroundColor = _favoriteForegroundColorTextBoxes[index].Text.Trim()
             })
@@ -204,7 +203,8 @@ public partial class FavoriteButtonsSettingsView : System.Windows.Controls.UserC
             _favoriteBackgroundColorTextBoxes[index].TextChanged += (_, _) => UpdateSlotNumberBandPreview(colorIndex);
             _favoriteForegroundColorTextBoxes[index].TextChanged += (_, _) => UpdateSlotNumberBandPreview(colorIndex);
             _favoriteIconSelectButtons[index].Click += (_, _) => SelectIconPath(_favoriteIconPathTextBoxes[colorIndex]);
-            _favoritePlaybackModeComboBoxes[index].SelectionChanged += (_, _) => UpdatePlaybackOptionState(colorIndex);
+            _favoriteStartPositionTextBoxes[index].LostKeyboardFocus += (_, _) => NormalizeStartPositionTextBox(colorIndex);
+            _favoriteStartPositionTextBoxes[index].KeyDown += (_, e) => NormalizeStartPositionTextBoxOnEnter(colorIndex, e);
             _favoriteDeleteButtons[index].Click += (_, _) => DeleteFavoriteSlot(colorIndex);
         }
     }
@@ -239,14 +239,11 @@ public partial class FavoriteButtonsSettingsView : System.Windows.Controls.UserC
         _favoriteLabelTextBoxes[index].Text = bookmark.Label;
         _favoriteUrlTextBoxes[index].Text = bookmark.Url;
         _favoriteIconPathTextBoxes[index].Text = bookmark.IconPath;
-        SelectComboBoxItem(_favoriteIconShapeComboBoxes[index], GetIconShapeLabel(bookmark.IconShape));
-        _favoriteIconRoundedCheckBoxes[index].IsChecked = bookmark.IconRounded;
         _favoriteBoldCheckBoxes[index].IsChecked = bookmark.IsBold;
-        SelectComboBoxItem(_favoritePlaybackModeComboBoxes[index], GetPlaybackModeLabel(bookmark.PlaybackMode));
+        _favoriteStartPositionTextBoxes[index].Text = FormatStartPosition(bookmark.StartPositionSeconds);
         _favoriteAutoplayCheckBoxes[index].IsChecked = bookmark.Autoplay;
         _favoriteMuteCheckBoxes[index].IsChecked = bookmark.Mute;
         _favoriteLoopCheckBoxes[index].IsChecked = bookmark.Loop;
-        _favoriteResumeCheckBoxes[index].IsChecked = bookmark.ResumePlayback;
         _favoriteBackgroundColorTextBoxes[index].Text = bookmark.BackgroundColor;
         _favoriteForegroundColorTextBoxes[index].Text = bookmark.ForegroundColor;
         UpdateColorPreview(_favoriteBackgroundColorTextBoxes[index], _favoriteBackgroundColorButtons[index], AppConstants.DefaultBookmarkBackgroundColor);
@@ -267,58 +264,98 @@ public partial class FavoriteButtonsSettingsView : System.Windows.Controls.UserC
 
     private void UpdatePlaybackOptionState(int index)
     {
-        var isPlayerMode = GetSelectedPlaybackMode(_favoritePlaybackModeComboBoxes[index]) == AppConstants.PlayerPlaybackMode;
-        _favoriteAutoplayCheckBoxes[index].IsEnabled = isPlayerMode;
-        _favoriteMuteCheckBoxes[index].IsEnabled = isPlayerMode;
-        _favoriteLoopCheckBoxes[index].IsEnabled = isPlayerMode;
-        _favoriteResumeCheckBoxes[index].IsEnabled = true;
+        _favoriteAutoplayCheckBoxes[index].IsEnabled = true;
+        _favoriteMuteCheckBoxes[index].IsEnabled = true;
+        _favoriteLoopCheckBoxes[index].IsEnabled = true;
     }
 
-    private static void SelectComboBoxItem(WpfComboBox comboBox, string text)
+    private void NormalizeStartPositionTextBoxOnEnter(int index, WpfKeyEventArgs e)
     {
-        foreach (var item in comboBox.Items.OfType<ComboBoxItem>())
+        if (e.Key != Key.Enter)
         {
-            if (item.Content?.ToString() == text)
-            {
-                comboBox.SelectedItem = item;
-                return;
-            }
+            return;
         }
 
-        comboBox.SelectedIndex = 0;
+        NormalizeStartPositionTextBox(index);
+        e.Handled = true;
     }
 
-    private static string GetSelectedComboBoxText(WpfComboBox comboBox, string fallback)
+    private void NormalizeStartPositionTextBox(int index)
     {
-        return (comboBox.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? fallback;
+        if (TryNormalizeStartPositionText(_favoriteStartPositionTextBoxes[index].Text, out _, out var normalized))
+        {
+            _favoriteStartPositionTextBoxes[index].Text = normalized;
+        }
     }
 
-    private static string GetIconShapeLabel(string value)
+    private static bool TryNormalizeStartPositionText(string? value, out int seconds, out string normalized)
     {
-        return value == AppConstants.RectangleBookmarkIconShape
-            ? AppConstants.BookmarkIconShapeRectangleLabel
-            : AppConstants.BookmarkIconShapeSquareLabel;
+        seconds = 0;
+        normalized = "00:00:00";
+        var trimmed = value?.Trim() ?? string.Empty;
+        if (trimmed.Length == 0)
+        {
+            return true;
+        }
+
+        if (trimmed.All(char.IsDigit))
+        {
+            return TryNormalizeDigitsOnlyStartPosition(trimmed, out seconds, out normalized);
+        }
+
+        if (trimmed.Any(c => !char.IsDigit(c) && c != ':'))
+        {
+            return false;
+        }
+
+        var parts = trimmed.Split(':');
+        if (parts.Length != 3
+            || parts.Any(part => part.Length == 0 || !part.All(char.IsDigit))
+            || !int.TryParse(parts[0], out var hours)
+            || !int.TryParse(parts[1], out var minutes)
+            || !int.TryParse(parts[2], out var startSeconds)
+            || minutes is < 0 or > 59
+            || startSeconds is < 0 or > 59
+            || hours < 0)
+        {
+            return false;
+        }
+
+        seconds = hours * 3600 + minutes * 60 + startSeconds;
+        normalized = FormatStartPosition(seconds);
+        return true;
     }
 
-    private static string GetSelectedIconShape(WpfComboBox comboBox)
+    private static bool TryNormalizeDigitsOnlyStartPosition(string value, out int seconds, out string normalized)
     {
-        return GetSelectedComboBoxText(comboBox, AppConstants.BookmarkIconShapeSquareLabel) == AppConstants.BookmarkIconShapeRectangleLabel
-            ? AppConstants.RectangleBookmarkIconShape
-            : AppConstants.DefaultBookmarkIconShape;
+        seconds = 0;
+        normalized = "00:00:00";
+        var padded = value.PadLeft(6, '0');
+        var secondsPart = padded[^2..];
+        var minutesPart = padded[^4..^2];
+        var hoursPart = padded[..^4];
+
+        if (!int.TryParse(hoursPart, out var hours)
+            || !int.TryParse(minutesPart, out var minutes)
+            || !int.TryParse(secondsPart, out var startSeconds)
+            || minutes is > 59
+            || startSeconds is > 59)
+        {
+            return false;
+        }
+
+        seconds = hours * 3600 + minutes * 60 + startSeconds;
+        normalized = FormatStartPosition(seconds);
+        return true;
     }
 
-    private static string GetPlaybackModeLabel(string value)
+    private static string FormatStartPosition(int totalSeconds)
     {
-        return value == AppConstants.PlayerPlaybackMode
-            ? AppConstants.PlaybackModePlayerLabel
-            : AppConstants.PlaybackModeNormalLabel;
-    }
-
-    private static string GetSelectedPlaybackMode(WpfComboBox comboBox)
-    {
-        return GetSelectedComboBoxText(comboBox, AppConstants.PlaybackModeNormalLabel) == AppConstants.PlaybackModePlayerLabel
-            ? AppConstants.PlayerPlaybackMode
-            : AppConstants.DefaultPlaybackMode;
+        var safeSeconds = Math.Max(0, totalSeconds);
+        var hours = safeSeconds / 3600;
+        var minutes = safeSeconds % 3600 / 60;
+        var seconds = safeSeconds % 60;
+        return $"{hours:00}:{minutes:00}:{seconds:00}";
     }
 
     private static void SelectColor(WpfTextBox colorTextBox, WpfButton previewButton, string fallback)

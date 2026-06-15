@@ -20,17 +20,11 @@ public sealed class BookmarkItem
 
     public string IconPath { get; set; } = string.Empty;
 
-    public string IconShape { get; set; } = AppConstants.DefaultBookmarkIconShape;
-
-    public bool IconRounded { get; set; } = true;
-
-    public string PlaybackMode { get; set; } = AppConstants.DefaultPlaybackMode;
-
     public bool Autoplay { get; set; }
 
     public bool Mute { get; set; }
 
     public bool Loop { get; set; }
 
-    public bool ResumePlayback { get; set; } = true;
+    public int StartPositionSeconds { get; set; }
 }

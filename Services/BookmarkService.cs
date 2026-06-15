@@ -125,13 +125,10 @@ public sealed class BookmarkService : JsonFileService
                 ForegroundColor = AppConstants.DefaultBookmarkForegroundColor,
                 IsBold = false,
                 IconPath = string.Empty,
-                IconShape = AppConstants.DefaultBookmarkIconShape,
-                IconRounded = true,
-                PlaybackMode = AppConstants.DefaultPlaybackMode,
                 Autoplay = false,
                 Mute = false,
                 Loop = false,
-                ResumePlayback = true
+                StartPositionSeconds = 0
             })
             .ToList();
     }
@@ -148,13 +145,10 @@ public sealed class BookmarkService : JsonFileService
             ForegroundColor = AppConstants.DefaultBookmarkForegroundColor,
             IsBold = false,
             IconPath = string.Empty,
-            IconShape = AppConstants.DefaultBookmarkIconShape,
-            IconRounded = true,
-            PlaybackMode = AppConstants.DefaultPlaybackMode,
             Autoplay = false,
             Mute = false,
             Loop = false,
-            ResumePlayback = true
+            StartPositionSeconds = 0
         };
     }
 
@@ -174,13 +168,10 @@ public sealed class BookmarkService : JsonFileService
                 ForegroundColor = NormalizeColor(item.ForegroundColor, AppConstants.DefaultBookmarkForegroundColor),
                 IsBold = item.IsBold,
                 IconPath = NormalizeIconPath(item.IconPath),
-                IconShape = NormalizeIconShape(item.IconShape),
-                IconRounded = item.IconRounded,
-                PlaybackMode = NormalizePlaybackMode(item.PlaybackMode),
                 Autoplay = item.Autoplay,
                 Mute = item.Mute,
                 Loop = item.Loop,
-                ResumePlayback = item.ResumePlayback
+                StartPositionSeconds = Math.Max(0, item.StartPositionSeconds)
             })
             .ToList();
 
@@ -196,13 +187,10 @@ public sealed class BookmarkService : JsonFileService
                 ForegroundColor = AppConstants.DefaultBookmarkForegroundColor,
                 IsBold = false,
                 IconPath = string.Empty,
-                IconShape = AppConstants.DefaultBookmarkIconShape,
-                IconRounded = true,
-                PlaybackMode = AppConstants.DefaultPlaybackMode,
                 Autoplay = false,
                 Mute = false,
                 Loop = false,
-                ResumePlayback = true
+                StartPositionSeconds = 0
             });
         }
 
@@ -241,25 +229,4 @@ public sealed class BookmarkService : JsonFileService
             : string.Empty;
     }
 
-    private static string NormalizeIconShape(string? value)
-    {
-        var trimmed = string.IsNullOrWhiteSpace(value)
-            ? AppConstants.DefaultBookmarkIconShape
-            : value.Trim();
-
-        return trimmed is AppConstants.DefaultBookmarkIconShape or AppConstants.RectangleBookmarkIconShape
-            ? trimmed
-            : AppConstants.DefaultBookmarkIconShape;
-    }
-
-    private static string NormalizePlaybackMode(string? value)
-    {
-        var trimmed = string.IsNullOrWhiteSpace(value)
-            ? AppConstants.DefaultPlaybackMode
-            : value.Trim();
-
-        return trimmed is AppConstants.DefaultPlaybackMode or AppConstants.PlayerPlaybackMode
-            ? trimmed
-            : AppConstants.DefaultPlaybackMode;
-    }
 }

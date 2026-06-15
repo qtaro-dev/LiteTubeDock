@@ -3,9 +3,10 @@ namespace LiteTubeDock.Constants;
 public static class AppConstants
 {
     public const string AppName = "LiteTube Dock";
-    public const string AppVersion = "0.1.3";
+    public const string AppVersion = "0.2.1";
     public const string HelpWindowTitle = "LiteTube Dock ヘルプ";
     public const string AboutWindowTitle = "LiteTube Dock バージョン情報";
+    public const string LogViewerWindowTitle = "LiteTube Dock ログ";
     public const string PlayerModeDiagnosticsTitle = "プレイヤーモード診断";
     public const string VersionPrefix = "Version ";
     public const string TechnologyHeadingText = "使用技術";
@@ -18,6 +19,9 @@ public static class AppConstants
     public const string SecurityPolicyHeadingText = "セキュリティ方針";
     public const string CloseButtonText = "閉じる";
     public const string DataDirectoryName = "data";
+    public const string LogsDirectoryName = "logs";
+    public const string LogFilePrefix = "litetubedock_";
+    public const int LogRetentionDays = 14;
     public const string SettingsExportDirectoryName = "settings";
     public const string IconsDirectoryName = "icons";
     public const string SettingsFileName = "settings.json";
@@ -31,6 +35,9 @@ public static class AppConstants
 
     public static string DataDirectoryPath =>
         System.IO.Path.Combine(AppBaseDirectory, DataDirectoryName);
+
+    public static string LogsDirectoryPath =>
+        System.IO.Path.Combine(AppBaseDirectory, LogsDirectoryName);
 
     public static string SettingsDirectoryPath =>
         System.IO.Path.Combine(DataDirectoryPath, SettingsExportDirectoryName);
@@ -54,15 +61,8 @@ public static class AppConstants
     public const string DefaultBookmarkBackgroundColor = "#F0F0F0";
     public const string DefaultBookmarkForegroundColor = "#000000";
     public const int FavoriteButtonDisplayLabelMaxLength = 100;
-    public const string DefaultBookmarkIconShape = "Square";
-    public const string RectangleBookmarkIconShape = "Rectangle";
-    public const string BookmarkIconShapeSquareLabel = "四角";
-    public const string BookmarkIconShapeRectangleLabel = "横長";
-    public const double RoundedBookmarkIconCornerRadius = 8;
-    public const string DefaultPlaybackMode = "Normal";
-    public const string PlayerPlaybackMode = "Player";
-    public const string PlaybackModeNormalLabel = "通常";
-    public const string PlaybackModePlayerLabel = "プレイヤー";
+    public const string FavoritePlaybackRangeNotFoundMessage = "再生箇所が見つかりません。ボタンの設定を見直してください。";
+    public const string FavoritePlaybackPositionUnknownMessage = "再生位置を確認できませんでした。時間をおいて再度お試しください。";
     public const string RefererHeaderName = "Referer";
     public const string DefaultPlayerModeRefererValue = "https://litetubedock.local/";
     public const string DefaultWindowSizePreset = "800x600";
@@ -110,6 +110,29 @@ public static class AppConstants
     public const string BookmarksReloadFailedText = "状態: お気に入り設定を再読み込みできませんでした";
     public const string WebViewRefererSetupFailedText = "状態: YouTube埋め込み向けReferer設定を適用できませんでした";
     public const string WebViewRefererAttachedText = "状態: プレイヤーモードReferer付与を試行しました";
+    public const string IpcStartFailedText = "状態: IPCの開始に失敗しました。ログを確認してください。";
+    public const string LogViewerMenuText = "ログを表示";
+    public const string LogMenuText = "ログ";
+    public const string OpenLogFolderMenuText = "ログフォルダーを開く";
+    public const string LogViewerReloadButtonText = "再読み込み";
+    public const string LogViewerCopyAllButtonText = "全文コピー";
+    public const string LogViewerOpenFolderButtonText = "ログフォルダーを開く";
+    public const string LogViewerAutoRefreshText = "自動更新";
+    public const string LogViewerScrollToEndText = "更新時に最下部へ移動";
+    public const string LogViewerFindNextButtonText = "次を検索";
+    public const string LogViewerSearchToolTip = "PID、Pipe名、Command、ErrorCode、MEDIA_NOT_FOUNDなどを検索できます。Ctrl+Fでも移動できます。";
+    public const string LogViewerNoLogFileText = "表示できるログファイルがありません。";
+    public const string LogViewerTruncatedText = "ログが大きいため、最新部分のみ表示しています。";
+    public const string LogViewerLoadedText = "ログを読み込みました。";
+    public const string LogViewerLoadFailedText = "ログを読み込めませんでした。";
+    public const string LogViewerCopySucceededText = "ログ全文をコピーしました。";
+    public const string LogViewerCopyEmptyText = "コピーできるログがありません。";
+    public const string LogViewerCopyFailedText = "ログをコピーできませんでした。";
+    public const string LogViewerOpenFolderSucceededText = "ログフォルダーを開きました。";
+    public const string LogViewerOpenFolderFailedText = "ログフォルダーを開けませんでした。";
+    public const string LogViewerSearchEmptyText = "検索文字列を入力してください。";
+    public const string LogViewerSearchFoundText = "検索結果へ移動しました。";
+    public const string LogViewerSearchNotFoundText = "該当する文字列がありません。";
     public const string WindowSizeChangedText = "状態: ウィンドウサイズを変更しました";
     public const string WindowPositionResetText = "状態: ウィンドウ位置をリセットしました";
     public const string WindowBoundsResetText = "状態: ウィンドウ位置とサイズをリセットしました";
@@ -118,6 +141,12 @@ public static class AppConstants
     public const int FavoriteMovieLabelMaxLength = 20;
     public const string FullScreenOnText = "状態: フルスクリーン";
     public const string FullScreenOffText = "状態: 通常表示";
+    public const string PlayerModeChromeHiddenText = "状態: プレイヤーモードのタイトルバーを非表示にしました";
+    public const string PlayerModeChromeHideFailedText = "状態: プレイヤーモードのタイトルバー非表示に失敗しました";
+    public const string WindowStateLogCategory = "WindowState";
+    public const string PlayerModeWindowChromeNoneText = "None";
+    public const int PlayerModeResizeBorderThickness = 8;
+    public const int PlayerModeDragAreaHeight = 6;
     public const string AlwaysOnTopOnText = "最前面: ON";
     public const string AlwaysOnTopOffText = "最前面: OFF";
     public const string EmptyBookmarkLabel = "-";
@@ -140,11 +169,14 @@ LiteTube Dock 起動引数
 --ipc-enabled
   LiteTubeDockControlとの連携用Named Pipe受信機能を有効にします。
 
+--start-paused
+  LiteTubeDockControl管理起動時、初回読み込み後にメディアを停止状態にします。
+
 --help
   このヘルプを表示します。
 
 使用例:
-  LiteTubeDock.exe --player-mode --ipc-enabled --url "https://www.youtube.com/"
+  LiteTubeDock.exe --player-mode --ipc-enabled --start-paused --url "https://www.youtube.com/"
 """;
 
     public static bool TryGetWindowSizePreset(string preset, out double width, out double height)

@@ -113,6 +113,11 @@
                 <MenuItem x:Name="ReloadSettingsMenuItem" Header="設定を再読み込み" />
             </MenuItem>
 
+            <MenuItem x:Name="LogMenuItem" Header="ログ">
+                <MenuItem x:Name="OpenLogWindowMenuItem" Header="ログを表示" />
+                <MenuItem x:Name="OpenLogFolderMenuItem" Header="ログフォルダーを開く" />
+            </MenuItem>
+
             <MenuItem x:Name="HelpMenuItem" Header="ヘルプ">
                 <MenuItem x:Name="OpenHelpMenuItem" Header="ヘルプを開く" />
                 <MenuItem x:Name="PlayerModeDiagnosticsMenuItem" Header="プレイヤーモード診断" />
@@ -178,6 +183,14 @@
         <Border x:Name="PlayerArea" Grid.Row="2" BorderBrush="Gray" BorderThickness="2" Margin="8">
             <wv2:WebView2 x:Name="PlayerWebView" />
         </Border>
+
+        <Border x:Name="PlayerModeDragArea"
+                Grid.Row="2"
+                Height="6"
+                VerticalAlignment="Top"
+                Background="Transparent"
+                Visibility="Collapsed"
+                Panel.ZIndex="10" />
 
 
         <!-- ステータスバー -->
