@@ -368,3 +368,4 @@ FodyWeavers.xsd
 data/
 settings/
 *.WebView2/
+/docs
