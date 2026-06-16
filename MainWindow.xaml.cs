@@ -15,7 +15,6 @@ using LiteTubeDock.Services;
 using LiteTubeDock.Views;
 using Microsoft.Web.WebView2.Core;
 using Forms = System.Windows.Forms;
-using WpfBorder = System.Windows.Controls.Border;
 using WpfBrush = System.Windows.Media.Brush;
 using WpfButton = System.Windows.Controls.Button;
 using WpfKeyEventArgs = System.Windows.Input.KeyEventArgs;
@@ -232,18 +231,46 @@ public partial class MainWindow : Window
     {
         for (var index = 0; index < _favoriteButtons.Length; index++)
         {
-            var menuItem = new MenuItem
+            var contextMenu = new ContextMenu
             {
-                Header = "現在再生中のムービーを登録",
                 Tag = index
             };
-            menuItem.Click += RegisterCurrentMovieMenuItem_Click;
-
-            _favoriteButtons[index].ContextMenu = new ContextMenu
-            {
-                Items = { menuItem }
-            };
+            contextMenu.Opened += FavoriteButtonContextMenu_Opened;
+            _favoriteButtons[index].ContextMenu = contextMenu;
         }
+    }
+
+    private void FavoriteButtonContextMenu_Opened(object sender, RoutedEventArgs e)
+    {
+        if (sender is not ContextMenu { Tag: int index } contextMenu)
+        {
+            return;
+        }
+
+        contextMenu.Items.Clear();
+        var shiftPressed = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
+        if (shiftPressed)
+        {
+            var menuItem = new MenuItem
+            {
+                Header = AppConstants.FavoriteResetToHomeMenuText,
+                Foreground = System.Windows.Media.Brushes.Red,
+                Tag = index,
+                IsEnabled = IsFavoriteRegisteredForReset(index)
+            };
+            menuItem.Click += ResetFavoriteToHomeMenuItem_Click;
+            contextMenu.Items.Add(menuItem);
+            LogFavoriteResetContextMenu(index, shiftPressed, "ResetMenuShown", confirmed: null, saveResult: string.Empty, result: "MenuShown", errorCode: string.Empty);
+            return;
+        }
+
+        var registerItem = new MenuItem
+        {
+            Header = "現在再生中のムービーを登録",
+            Tag = index
+        };
+        registerItem.Click += RegisterCurrentMovieMenuItem_Click;
+        contextMenu.Items.Add(registerItem);
     }
 
     private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -1868,6 +1895,9 @@ public partial class MainWindow : Window
 
             button.Content = isEnabled ? CreateBookmarkButtonContent(bookmark!) : AppConstants.EmptyBookmarkLabel;
             button.IsEnabled = true;
+            button.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch;
+            button.VerticalContentAlignment = VerticalAlignment.Stretch;
+            button.Padding = new Thickness(0);
             button.Opacity = isEnabled ? 1.0 : 0.55;
             button.Tag = isEnabled ? bookmark : null;
             ApplyBookmarkButtonColors(button, bookmark, isEnabled);
@@ -1991,21 +2021,22 @@ public partial class MainWindow : Window
 
     private static object CreateBookmarkButtonContent(BookmarkItem bookmark)
     {
-        var icon = TryCreateBookmarkIcon(bookmark);
         var label = CreateBookmarkLabelTextBlock(bookmark);
-        if (icon is null)
+        var backgroundBrush = TryCreateBookmarkBackgroundBrush(bookmark);
+        if (backgroundBrush is null)
         {
             return label;
         }
 
-        var panel = new StackPanel
+        var panel = new Grid
         {
-            Orientation = System.Windows.Controls.Orientation.Vertical,
-            HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
-            VerticalAlignment = VerticalAlignment.Center
+            Background = backgroundBrush,
+            ClipToBounds = true,
+            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+            VerticalAlignment = VerticalAlignment.Stretch
         };
 
-        panel.Children.Add(icon);
+        System.Windows.Controls.Panel.SetZIndex(label, 1);
         panel.Children.Add(label);
 
         return panel;
@@ -2016,11 +2047,14 @@ public partial class MainWindow : Window
         return new TextBlock
         {
             Text = CreateBookmarkDisplayLabel(bookmark.Label),
+            HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center,
             TextAlignment = TextAlignment.Center,
             TextTrimming = TextTrimming.CharacterEllipsis,
             TextWrapping = TextWrapping.Wrap,
             FontWeight = bookmark.IsBold ? FontWeights.Bold : FontWeights.Normal,
-            MaxWidth = 96
+            MaxWidth = 96,
+            Padding = new Thickness(2)
         };
     }
 
@@ -2035,9 +2069,9 @@ public partial class MainWindow : Window
             : value;
     }
 
-    private static WpfBorder? TryCreateBookmarkIcon(BookmarkItem bookmark)
+    private static ImageBrush? TryCreateBookmarkBackgroundBrush(BookmarkItem bookmark)
     {
-        if (!TryResolveBookmarkIconPath(bookmark.IconPath, out var fullPath) || !File.Exists(fullPath))
+        if (!TryResolveBookmarkImagePath(bookmark.IconPath, out var fullPath) || !File.Exists(fullPath))
         {
             return null;
         }
@@ -2050,36 +2084,38 @@ public partial class MainWindow : Window
 
         try
         {
+            using var stream = File.Open(fullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
             bitmap.CacheOption = BitmapCacheOption.OnLoad;
-            bitmap.UriSource = new Uri(fullPath, UriKind.Absolute);
-            bitmap.DecodePixelWidth = 28;
-            bitmap.DecodePixelHeight = 28;
+            bitmap.StreamSource = stream;
+            bitmap.DecodePixelWidth = AppConstants.FavoriteBackgroundImageDecodePixelSize;
             bitmap.EndInit();
             bitmap.Freeze();
 
-            var imageBrush = new ImageBrush(bitmap)
+            var brush = new ImageBrush(bitmap)
             {
-                Stretch = Stretch.UniformToFill
+                AlignmentX = AlignmentX.Center,
+                AlignmentY = AlignmentY.Center,
+                Stretch = Stretch.UniformToFill,
+                TileMode = TileMode.None
             };
-
-            return new WpfBorder
-            {
-                Background = imageBrush,
-                Width = 28,
-                Height = 28,
-                CornerRadius = new CornerRadius(0),
-                Margin = new Thickness(0, 0, 0, 2)
-            };
+            brush.Freeze();
+            return brush;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            DiagnosticLogService.Write(
+                "Favorite",
+                "Event=FavoriteBackgroundImageLoadFailed"
+                + "; Path=" + fullPath
+                + "; ExceptionType=" + ex.GetType().Name
+                + "; Message=" + ex.Message);
             return null;
         }
     }
 
-    private static bool TryResolveBookmarkIconPath(string? iconPath, out string fullPath)
+    private static bool TryResolveBookmarkImagePath(string? iconPath, out string fullPath)
     {
         fullPath = string.Empty;
 
@@ -2146,6 +2182,151 @@ public partial class MainWindow : Window
         }
 
         RegisterCurrentMovieToFavorite(index);
+    }
+
+    private void ResetFavoriteToHomeMenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not MenuItem { Tag: int index })
+        {
+            return;
+        }
+
+        ResetFavoriteToHome(index);
+    }
+
+    private void ResetFavoriteToHome(int index)
+    {
+        var previous = _bookmarks.ElementAtOrDefault(index);
+        var homeUrl = GetCurrentValidHomeUrl();
+        var confirmed = false;
+        try
+        {
+            var result = System.Windows.MessageBox.Show(
+                AppConstants.FavoriteResetToHomeConfirmMessage,
+                AppConstants.AppName,
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question,
+                MessageBoxResult.No);
+
+            confirmed = result == MessageBoxResult.Yes;
+            if (!confirmed)
+            {
+                LogFavoriteResetContextMenu(index, shiftPressed: true, "ResetCancelled", confirmed, saveResult: "Skipped", result: "Cancelled", errorCode: string.Empty);
+                return;
+            }
+
+            var bookmarks = _bookmarks.ToList();
+            while (bookmarks.Count < AppConstants.MaxBookmarks)
+            {
+                bookmarks.Add(new BookmarkItem { SortOrder = bookmarks.Count + 1 });
+            }
+
+            bookmarks[index] = CreateHomeBookmarkForSlot(index + 1, homeUrl);
+            _bookmarkService.Save(bookmarks);
+            _bookmarks = _bookmarkService.Load();
+            ApplyBookmarks(_bookmarks);
+            if (_openSettingsWindow is { IsLoaded: true } settingsWindow)
+            {
+                settingsWindow.ReloadBookmarksFromFile();
+            }
+
+            LoadingStatusText.Text = $"状態: お気に入り{index + 1:00}をHomeへ初期化しました";
+            LogFavoriteResetContextMenu(index, shiftPressed: true, "ResetApplied", confirmed, saveResult: "Saved", result: "Success", errorCode: string.Empty, previous, homeUrl);
+        }
+        catch (Exception ex)
+        {
+            DiagnosticLogService.WriteException("Favorite", "Favorite reset to Home failed.", ex);
+            LoadingStatusText.Text = AppConstants.FavoriteResetToHomeFailedMessage;
+            System.Windows.MessageBox.Show(
+                AppConstants.FavoriteResetToHomeFailedMessage,
+                AppConstants.AppName,
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+            LogFavoriteResetContextMenu(index, shiftPressed: true, "ResetFailed", confirmed, saveResult: "Failed", result: "Failed", errorCode: ex.GetType().Name, previous, homeUrl);
+        }
+    }
+
+    private BookmarkItem CreateHomeBookmarkForSlot(int sortOrder, string homeUrl)
+    {
+        return new BookmarkItem
+        {
+            Label = AppConstants.DefaultHomeBookmarkLabel,
+            Url = homeUrl,
+            SortOrder = sortOrder,
+            IsEnabled = true,
+            BackgroundColor = AppConstants.DefaultBookmarkBackgroundColor,
+            ForegroundColor = AppConstants.DefaultBookmarkForegroundColor,
+            IsBold = false,
+            IconPath = string.Empty,
+            Autoplay = false,
+            Mute = false,
+            Loop = false,
+            StartPositionSeconds = 0
+        };
+    }
+
+    private string GetCurrentValidHomeUrl()
+    {
+        var loaded = _settingsService.Load();
+        var candidate = loaded.HomeUrl;
+        return Uri.TryCreate(candidate, UriKind.Absolute, out var uri)
+            && uri.Scheme is "http" or "https"
+            ? uri.ToString()
+            : AppConstants.DefaultHomeUrl;
+    }
+
+    private bool IsFavoriteRegisteredForReset(int index)
+    {
+        var bookmark = _bookmarks.ElementAtOrDefault(index);
+        if (bookmark is null)
+        {
+            return false;
+        }
+
+        return !IsHomeInitialBookmark(bookmark, GetCurrentValidHomeUrl());
+    }
+
+    private static bool IsHomeInitialBookmark(BookmarkItem bookmark, string homeUrl)
+    {
+        return bookmark.IsEnabled
+            && string.Equals(bookmark.Label?.Trim(), AppConstants.DefaultHomeBookmarkLabel, StringComparison.Ordinal)
+            && AreSameAbsoluteUrl(bookmark.Url, homeUrl)
+            && string.IsNullOrWhiteSpace(bookmark.IconPath)
+            && string.Equals(bookmark.BackgroundColor, AppConstants.DefaultBookmarkBackgroundColor, StringComparison.OrdinalIgnoreCase)
+            && string.Equals(bookmark.ForegroundColor, AppConstants.DefaultBookmarkForegroundColor, StringComparison.OrdinalIgnoreCase)
+            && !bookmark.IsBold
+            && bookmark.StartPositionSeconds == 0
+            && !bookmark.Autoplay
+            && !bookmark.Mute
+            && !bookmark.Loop;
+    }
+
+    private void LogFavoriteResetContextMenu(
+        int index,
+        bool shiftPressed,
+        string eventName,
+        bool? confirmed,
+        string saveResult,
+        string result,
+        string errorCode,
+        BookmarkItem? previous = null,
+        string? homeUrl = null)
+    {
+        previous ??= _bookmarks.ElementAtOrDefault(index);
+        homeUrl ??= GetCurrentValidHomeUrl();
+        DiagnosticLogService.Write(
+            "Favorite",
+            "Event=" + eventName
+            + "; Slot=" + (index + 1)
+            + "; ShiftPressed=" + shiftPressed
+            + "; PreviousDisplayName=" + (previous?.Label ?? string.Empty)
+            + "; PreviousUrl=" + DiagnosticLogService.FormatUrlForLog(previous?.Url)
+            + "; HomeUrl=" + DiagnosticLogService.FormatUrlForLog(homeUrl)
+            + "; Confirmed=" + (confirmed?.ToString() ?? string.Empty)
+            + "; SaveResult=" + saveResult
+            + "; SyncResult=" + (saveResult == "Saved" ? "FileWatcher" : string.Empty)
+            + "; Result=" + result
+            + "; ErrorCode=" + errorCode);
     }
 
     private void RegisterCurrentMovieToFavorite(int index)

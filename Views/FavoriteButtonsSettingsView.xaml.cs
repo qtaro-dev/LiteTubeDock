@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using LiteTubeDock.Constants;
 using LiteTubeDock.Models;
 using LiteTubeDock.Services;
@@ -383,9 +384,9 @@ public partial class FavoriteButtonsSettingsView : System.Windows.Controls.UserC
 
         using var dialog = new Forms.OpenFileDialog
         {
-            Title = "アイコン画像を選択",
+            Title = "背景画像を選択",
             InitialDirectory = AppPathService.GetIconsDirectoryPath(),
-            Filter = "画像ファイル (*.png;*.jpg;*.jpeg;*.webp)|*.png;*.jpg;*.jpeg;*.webp|すべてのファイル (*.*)|*.*",
+            Filter = "画像ファイル (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg|すべてのファイル (*.*)|*.*",
             CheckFileExists = true,
             Multiselect = false
         };
@@ -395,7 +396,85 @@ public partial class FavoriteButtonsSettingsView : System.Windows.Controls.UserC
             return;
         }
 
+        if (!TryValidateFavoriteBackgroundImage(dialog.FileName))
+        {
+            return;
+        }
+
         iconPathTextBox.Text = ToProjectRelativePath(dialog.FileName);
+    }
+
+    private static bool TryValidateFavoriteBackgroundImage(string path)
+    {
+        if (!File.Exists(path))
+        {
+            ShowBackgroundImageError(AppConstants.FavoriteBackgroundImageLoadFailedMessage);
+            return false;
+        }
+
+        var extension = Path.GetExtension(path).ToLowerInvariant();
+        if (extension is not ".png" and not ".jpg" and not ".jpeg")
+        {
+            ShowBackgroundImageError(AppConstants.FavoriteBackgroundImageUnsupportedFormatMessage);
+            return false;
+        }
+
+        var fileInfo = new FileInfo(path);
+        if (fileInfo.Length > AppConstants.FavoriteBackgroundImageMaxBytes)
+        {
+            ShowBackgroundImageError(
+                AppConstants.FavoriteBackgroundImageFileTooLargeMessage
+                + Environment.NewLine
+                + $"実ファイルサイズ: {FormatFileSize(fileInfo.Length)}");
+            return false;
+        }
+
+        try
+        {
+            using var stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+            var decoder = BitmapDecoder.Create(
+                stream,
+                BitmapCreateOptions.IgnoreColorProfile,
+                BitmapCacheOption.OnLoad);
+            var frame = decoder.Frames.FirstOrDefault();
+            if (frame is null)
+            {
+                ShowBackgroundImageError(AppConstants.FavoriteBackgroundImageLoadFailedMessage);
+                return false;
+            }
+
+            if (frame.PixelWidth > AppConstants.FavoriteBackgroundImageMaxWidth
+                || frame.PixelHeight > AppConstants.FavoriteBackgroundImageMaxHeight)
+            {
+                ShowBackgroundImageError(
+                    AppConstants.FavoriteBackgroundImageTooLargeMessage
+                    + Environment.NewLine
+                    + $"実サイズ: {frame.PixelWidth} x {frame.PixelHeight}px");
+                return false;
+            }
+
+            return true;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or NotSupportedException or FileFormatException)
+        {
+            ShowBackgroundImageError(AppConstants.FavoriteBackgroundImageLoadFailedMessage);
+            return false;
+        }
+    }
+
+    private static void ShowBackgroundImageError(string message)
+    {
+        System.Windows.MessageBox.Show(
+            message,
+            AppConstants.AppName,
+            MessageBoxButton.OK,
+            MessageBoxImage.Warning);
+    }
+
+    private static string FormatFileSize(long bytes)
+    {
+        var megabytes = bytes / 1024d / 1024d;
+        return $"{megabytes:0.##}MB ({bytes} bytes)";
     }
 
     private static string ToProjectRelativePath(string path)

@@ -70,7 +70,7 @@
                         <Button x:Name="FavoriteDeleteButton01" Grid.Row="0" Grid.Column="3" Content="{x:Static constants:AppConstants.FavoriteDeleteButtonText}" Width="60" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="URL" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteUrlTextBox01" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Margin="4" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" Text="アイコン" Margin="4" VerticalAlignment="Center" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="背景画像" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteIconPathTextBox01" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="4" />
                         <Button x:Name="FavoriteIconSelectButton01" Grid.Row="2" Grid.Column="4" Content="選択" Width="70" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
@@ -113,7 +113,7 @@
                         <Button x:Name="FavoriteDeleteButton02" Grid.Row="0" Grid.Column="3" Content="{x:Static constants:AppConstants.FavoriteDeleteButtonText}" Width="60" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="URL" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteUrlTextBox02" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Margin="4" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" Text="アイコン" Margin="4" VerticalAlignment="Center" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="背景画像" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteIconPathTextBox02" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="4" />
                         <Button x:Name="FavoriteIconSelectButton02" Grid.Row="2" Grid.Column="4" Content="選択" Width="70" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
@@ -150,7 +150,7 @@
                         <Button x:Name="FavoriteDeleteButton03" Grid.Row="0" Grid.Column="3" Content="{x:Static constants:AppConstants.FavoriteDeleteButtonText}" Width="60" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="URL" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteUrlTextBox03" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Margin="4" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" Text="アイコン" Margin="4" VerticalAlignment="Center" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="背景画像" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteIconPathTextBox03" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="4" />
                         <Button x:Name="FavoriteIconSelectButton03" Grid.Row="2" Grid.Column="4" Content="選択" Width="70" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
@@ -187,7 +187,7 @@
                         <Button x:Name="FavoriteDeleteButton04" Grid.Row="0" Grid.Column="3" Content="{x:Static constants:AppConstants.FavoriteDeleteButtonText}" Width="60" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="URL" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteUrlTextBox04" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Margin="4" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" Text="アイコン" Margin="4" VerticalAlignment="Center" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="背景画像" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteIconPathTextBox04" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="4" />
                         <Button x:Name="FavoriteIconSelectButton04" Grid.Row="2" Grid.Column="4" Content="選択" Width="70" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
@@ -224,7 +224,7 @@
                         <Button x:Name="FavoriteDeleteButton05" Grid.Row="0" Grid.Column="3" Content="{x:Static constants:AppConstants.FavoriteDeleteButtonText}" Width="60" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="URL" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteUrlTextBox05" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Margin="4" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" Text="アイコン" Margin="4" VerticalAlignment="Center" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="背景画像" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteIconPathTextBox05" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="4" />
                         <Button x:Name="FavoriteIconSelectButton05" Grid.Row="2" Grid.Column="4" Content="選択" Width="70" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
@@ -261,7 +261,7 @@
                         <Button x:Name="FavoriteDeleteButton06" Grid.Row="0" Grid.Column="3" Content="{x:Static constants:AppConstants.FavoriteDeleteButtonText}" Width="60" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="URL" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteUrlTextBox06" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Margin="4" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" Text="アイコン" Margin="4" VerticalAlignment="Center" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="背景画像" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteIconPathTextBox06" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="4" />
                         <Button x:Name="FavoriteIconSelectButton06" Grid.Row="2" Grid.Column="4" Content="選択" Width="70" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
@@ -298,7 +298,7 @@
                         <Button x:Name="FavoriteDeleteButton07" Grid.Row="0" Grid.Column="3" Content="{x:Static constants:AppConstants.FavoriteDeleteButtonText}" Width="60" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="URL" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteUrlTextBox07" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Margin="4" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" Text="アイコン" Margin="4" VerticalAlignment="Center" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="背景画像" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteIconPathTextBox07" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="4" />
                         <Button x:Name="FavoriteIconSelectButton07" Grid.Row="2" Grid.Column="4" Content="選択" Width="70" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
@@ -335,7 +335,7 @@
                         <Button x:Name="FavoriteDeleteButton08" Grid.Row="0" Grid.Column="3" Content="{x:Static constants:AppConstants.FavoriteDeleteButtonText}" Width="60" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="URL" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteUrlTextBox08" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Margin="4" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" Text="アイコン" Margin="4" VerticalAlignment="Center" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="背景画像" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteIconPathTextBox08" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="4" />
                         <Button x:Name="FavoriteIconSelectButton08" Grid.Row="2" Grid.Column="4" Content="選択" Width="70" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
@@ -372,7 +372,7 @@
                         <Button x:Name="FavoriteDeleteButton09" Grid.Row="0" Grid.Column="3" Content="{x:Static constants:AppConstants.FavoriteDeleteButtonText}" Width="60" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="URL" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteUrlTextBox09" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Margin="4" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" Text="アイコン" Margin="4" VerticalAlignment="Center" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="背景画像" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteIconPathTextBox09" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="4" />
                         <Button x:Name="FavoriteIconSelectButton09" Grid.Row="2" Grid.Column="4" Content="選択" Width="70" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />
@@ -409,7 +409,7 @@
                         <Button x:Name="FavoriteDeleteButton10" Grid.Row="0" Grid.Column="3" Content="{x:Static constants:AppConstants.FavoriteDeleteButtonText}" Width="60" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="URL" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteUrlTextBox10" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Margin="4" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" Text="アイコン" Margin="4" VerticalAlignment="Center" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="背景画像" Margin="4" VerticalAlignment="Center" />
                         <TextBox x:Name="FavoriteIconPathTextBox10" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="4" />
                         <Button x:Name="FavoriteIconSelectButton10" Grid.Row="2" Grid.Column="4" Content="選択" Width="70" Margin="4" HorizontalAlignment="Left" />
                         <TextBlock Grid.Row="3" Grid.Column="1" Text="背景色" Margin="4" VerticalAlignment="Center" />

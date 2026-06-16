@@ -3,7 +3,7 @@ namespace LiteTubeDock.Constants;
 public static class AppConstants
 {
     public const string AppName = "LiteTube Dock";
-    public const string AppVersion = "0.2.1";
+    public const string AppVersion = "0.2.1fix2";
     public const string HelpWindowTitle = "LiteTube Dock ヘルプ";
     public const string AboutWindowTitle = "LiteTube Dock バージョン情報";
     public const string LogViewerWindowTitle = "LiteTube Dock ログ";
@@ -61,6 +61,17 @@ public static class AppConstants
     public const string DefaultBookmarkBackgroundColor = "#F0F0F0";
     public const string DefaultBookmarkForegroundColor = "#000000";
     public const int FavoriteButtonDisplayLabelMaxLength = 100;
+    public const int FavoriteBackgroundImageMaxWidth = 1024;
+    public const int FavoriteBackgroundImageMaxHeight = 1024;
+    public const long FavoriteBackgroundImageMaxBytes = 2L * 1024 * 1024;
+    public const int FavoriteBackgroundImageDecodePixelSize = 256;
+    public const string FavoriteBackgroundImageUnsupportedFormatMessage = "対応していない画像形式です。PNGまたはJPEGファイルを選択してください。";
+    public const string FavoriteBackgroundImageTooLargeMessage = "画像サイズが大きすぎます。幅・高さともに1024px以内の画像を選択してください。";
+    public const string FavoriteBackgroundImageFileTooLargeMessage = "ファイルサイズが大きすぎます。2MB以内の画像を選択してください。";
+    public const string FavoriteBackgroundImageLoadFailedMessage = "画像ファイルを読み込めませんでした。別の画像を選択してください。";
+    public const string FavoriteResetToHomeMenuText = "登録されているボタン情報を削除";
+    public const string FavoriteResetToHomeConfirmMessage = "登録されているボタン情報を削除します。よろしいですか？";
+    public const string FavoriteResetToHomeFailedMessage = "お気に入りボタンの初期化に失敗しました。設定を確認して再度お試しください。";
     public const string FavoritePlaybackRangeNotFoundMessage = "再生箇所が見つかりません。ボタンの設定を見直してください。";
     public const string FavoritePlaybackPositionUnknownMessage = "再生位置を確認できませんでした。時間をおいて再度お試しください。";
     public const string RefererHeaderName = "Referer";
